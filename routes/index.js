@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET: Redirect Homepage to login page. */
+/* GET: Homepage */
 router.get('/', function(req, res, next) {
     res.render('index');
 });
