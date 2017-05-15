@@ -1,25 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var https = require('https');
-/* GET: Weather */
-router.get('/', function(req, response, success) {
-    var options = {
-        host: 'api.darksky.net',
-        port: 443,
-        path: '/forecast/11eff69350b9b6a78ea4e05fe20cf341/36.8508,76.2859',
-        method: 'GET'
-    };
-    
-    var req = https.request(options, function(res) {
-        res.on('data', function(data) {
-            response.end(data, JSON);
-        });
-    });
-    req.end();
+const DarkSky = require('dark-sky');
+const forecast = new DarkSky('11eff69350b9b6a78ea4e05fe20cf341');
 
-    req.on('error', function(e) {
-        console.error(e);
-    });
+/* GET: Weather */
+router.get('/', function(req, response) {
+    forecast
+    .latitude('36.923015')
+    .longitude('-76.244641')
+    .get()
+    .then(res => {
+        response.json(res)
+    })
+    .catch(err => {                 
+        console.log(err)
+    })
 
 });
 
