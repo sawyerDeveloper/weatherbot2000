@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var React = require('react');
 var index = require('./routes/index');
+var weather = require('./routes/weather');
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/weather', weather);
 app.use('*', index);
 
 app.use(function(req, res, next) {
@@ -29,6 +31,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
