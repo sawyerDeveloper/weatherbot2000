@@ -13,7 +13,7 @@ export default class Weather extends React.Component {
 
         fetch('/weather').then( res => res.json() ).then( _weather => {
             console.log(_weather);
-            this.setState({ weather: _weather });
+            //this.setState({ weather: _weather });
         })
     }
 
