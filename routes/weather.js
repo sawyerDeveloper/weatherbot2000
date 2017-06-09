@@ -10,7 +10,8 @@ router.get('/', function(req, response) {
     .longitude('-76.244641')
     .get()
     .then(res => {
-        response.json(res)
+
+        response.json(res.daily.data)
     })
     .catch(err => {                 
         console.log(err)
