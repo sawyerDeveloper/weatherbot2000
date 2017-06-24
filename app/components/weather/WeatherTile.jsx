@@ -1,5 +1,5 @@
 import React from 'react';
-
+import reactCSS from 'reactcss';
 export default class WeatherTile extends React.Component {
     constructor(props) {
         super(props);
@@ -9,9 +9,27 @@ export default class WeatherTile extends React.Component {
     }
 
     render() {
+        const styles = reactCSS({
+        'default': {
+                container: {
+                    borderRadius: '5px',
+                    width: '100px',
+                    height: '100px',
+                    background: 'white',
+                    float: 'left',
+                    marginRight: '5px',
+                },
+                text: {
+                    fontSize: '11px'
+                }
+            },
+        })
         return (
-            <div>
-                {this.props.day.summary}
+            <div style={ styles.container }>
+                <div style={ styles.text }>
+                    {this.props.day.summary}
+                </div>
+                
             </div>
         );
     }

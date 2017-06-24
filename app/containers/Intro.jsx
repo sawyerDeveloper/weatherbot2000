@@ -3,7 +3,6 @@ import reactCSS from 'reactcss';
 import YouTube from 'react-youtube';
 export default class Intro extends React.Component {
 
-
     constructor(props) {
         super(props)
         this.state = {
@@ -27,8 +26,6 @@ export default class Intro extends React.Component {
                     left: '0',
                     width: '640px',
                     height: '360px',
-                    backgroundColor: '#ccc',
-                    borderRadius: '3px'
                 }
             },
         })
@@ -48,5 +45,5 @@ export default class Intro extends React.Component {
                 />
             </div>
         );
-    }
-}
+    };
+};
