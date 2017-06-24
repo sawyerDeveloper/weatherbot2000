@@ -11,7 +11,8 @@ export default class Weather extends React.Component {
     }
 
     componentDidMount(){
-        fetch('/weather').then( res => res.json() ).then( _weather => {
+        //Get weather data through internal API
+        fetch('/forecast').then( res => res.json() ).then( _weather => {
             
             this.setState({ dailyWeather: _weather });
         })
