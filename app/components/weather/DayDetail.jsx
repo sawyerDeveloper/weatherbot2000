@@ -2,19 +2,16 @@ import React from 'react';
 import reactCSS from 'reactcss';
 import ReactAnimatedWeather from 'react-animated-weather';
 
-export default class WeatherTile extends React.Component {
-
+export default class DayDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             
         };
-        
-        console.log(this.props.day)
+
     }
 
     render() {
-        const dayMapping = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const iconMapping = {
             "clear-day":"CLEAR_DAY",
             "clear-night":"CLEAR_NIGHT",
@@ -31,39 +28,29 @@ export default class WeatherTile extends React.Component {
         'default': {
                 container: {
                     borderRadius: '5px',
-                    width: '100px',
-                    height: '100px',
+                    width: '500px',
+                    height: '300px',
                     background: 'white',
-                    float: 'left',
-                    marginRight: '5px',
                     textAlign: 'center'
                 },
                 text: {
                     fontSize: '11px',
-                    
                 },
-                dayText: {
-                    fontSize: '13px',
-                    fontWeight: 'bold'
+                header: {
+                    fontSize: '18px',
+                    fontWeight: 'bold',
                 }
             },
         })
-
-        var day = new Date(0);
-        day.setUTCSeconds(this.props.day.time);
-
         return (
-            <div onClick={this.props.openDetail} style={ styles.container }>
-                <div style={ styles.text }>
-                    <div style={ styles.dayText }>{dayMapping[day.getDay()]}</div>
-                    <div>Temp {Math.round(this.props.day.temperatureMax)}&#176;</div>
-                    <div>Precip {Math.trunc(this.props.day.precipProbability * 100)}%</div>
-                    <div>Humid {Math.round(this.props.day.humidity * 100)}%</div>
+            <div style={ styles.container }>
+                <div style={ styles.header }>
+                    10 Hour Forecast
                 </div>
                 <ReactAnimatedWeather
                     icon={iconMapping[this.props.day.icon]}
                     color='black'
-                    size={32}
+                    size={64}
                     animate={true}
                 />
             </div>
