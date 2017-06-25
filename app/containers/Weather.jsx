@@ -29,9 +29,10 @@ export default class Weather extends React.Component {
                     right: '0',
                     bottom: '0',
                     left: '0',
-                    width: '850',
-                    height: '600',
-                    background: 'grey'
+                    width: 850,
+                    height: 600,
+                    background: 'grey',
+                    borderRadius: '5px'
                 },
                 tileHolder: {
                     float: 'none',
