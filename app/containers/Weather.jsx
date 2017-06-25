@@ -38,6 +38,7 @@ export default class Weather extends React.Component {
                         <WeatherWeek key={zip} zip={zip}/>
                     );
                 })}
+                
             </div>
         );
     }

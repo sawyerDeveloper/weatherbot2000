@@ -9,7 +9,7 @@ export default class WeatherTile extends React.Component {
         this.state = {
             
         };
-        
+
         console.log(this.props.day)
     }
 
@@ -51,11 +51,12 @@ export default class WeatherTile extends React.Component {
 
         var day = new Date(0);
         day.setUTCSeconds(this.props.day.time);
-
+        let dayNum = day.getDay();
+        
         return (
-            <div onClick={this.props.openDetail} style={ styles.container }>
+            <div onClick={(day) => this.props.openDetail(dayNum)} style={ styles.container }>
                 <div style={ styles.text }>
-                    <div style={ styles.dayText }>{dayMapping[day.getDay()]}</div>
+                    <div style={ styles.dayText }>{dayMapping[dayNum]}</div>
                     <div>Temp {Math.round(this.props.day.temperatureMax)}&#176;</div>
                     <div>Precip {Math.trunc(this.props.day.precipProbability * 100)}%</div>
                     <div>Humid {Math.round(this.props.day.humidity * 100)}%</div>

@@ -6,12 +6,21 @@ export default class DayDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            show: false
         };
+        console.log(this)
+    }
 
+    setShow(show){
+        this.setState({
+            show: show
+        })
     }
 
     render() {
+        if(!this.props.isOpen){
+            return null;
+        }
         const iconMapping = {
             "clear-day":"CLEAR_DAY",
             "clear-night":"CLEAR_NIGHT",
@@ -43,6 +52,7 @@ export default class DayDetail extends React.Component {
             },
         })
         return (
+
             <div style={ styles.container }>
                 <div style={ styles.header }>
                     10 Hour Forecast

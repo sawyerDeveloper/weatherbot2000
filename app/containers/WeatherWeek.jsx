@@ -1,14 +1,16 @@
 import React from 'react';
 import WeatherTile from '../components/weather/WeatherTile.jsx';
+import DayDetail from '../components/weather/DayDetail.jsx';
 import reactCSS from 'reactcss';
 export default class WeatherWeek extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            dailyWeather:[]
+            dailyWeather:[],
+            detailsOpen: false
         }
-        console.log('weatherWeek')
+        this.openDetail = this.openDetail.bind(this)
     }
 
     componentDidMount(){
@@ -21,6 +23,12 @@ export default class WeatherWeek extends React.Component {
     }
 
     openDetail(day){
+        this.setState({
+            detailDay: this.state.dailyWeather[day],
+            detailsOpen: true
+        })
+
+        //this._details.setShow(true);
         console.log('open detail', day);
     }
 
@@ -54,7 +62,10 @@ export default class WeatherWeek extends React.Component {
                     })}
                 </div>
 
+                <DayDetail day={this.state.detailDay} isOpen={this.state.detailsOpen}/>
             </div>
         );
     }
 }
+
+//<DayDetail ref={(ref) => this._details = ref }/>
