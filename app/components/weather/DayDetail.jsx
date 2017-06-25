@@ -6,21 +6,15 @@ export default class DayDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
         };
-        console.log(this)
-    }
-
-    setShow(show){
-        this.setState({
-            show: show
-        })
     }
 
     render() {
-        if(!this.props.isOpen){
+        if(this.props.day.length > 0){
+            console.log('should render DayDetails')
             return null;
         }
+        
         const iconMapping = {
             "clear-day":"CLEAR_DAY",
             "clear-night":"CLEAR_NIGHT",
