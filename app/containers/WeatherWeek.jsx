@@ -15,7 +15,7 @@ export default class WeatherWeek extends React.Component {
 
     componentDidMount(){
         //Get weather data through internal API
-        fetch('/forecast').then( res => res.json() ).then( _weather => {
+        fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( _weather => {
             
             this.setState({ dailyWeather: _weather });
             console.log(_weather)
@@ -23,7 +23,7 @@ export default class WeatherWeek extends React.Component {
     }
 
     openDetail(day){
-        fetch('/forecast/hourly/?time='+this.state.dailyWeather[day].time).then( res => res.json() ).then( _weather => {
+        fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.state.dailyWeather[day].time).then( res => res.json() ).then( _weather => {
             let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
             this.setState({ hourlyWeather: hours });
             console.log("hourly",hours)

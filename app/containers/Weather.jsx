@@ -8,9 +8,30 @@ export default class Weather extends React.Component {
         super(props)
         this.state = {
             zips: ["23324"],
-            dailyWeather:[]
+            detailsDay: null,
+            refresh: false,
+            lastRefresh: ""
         }
+
+        this.refreshComplete = this.refreshComplete.bind(this);
         console.log('weather')
+    }
+    
+    componentDidMount(){
+        //var intervalID = this.setInterval(this.refreshData, 60000);
+    }
+
+    refreshData(){
+        this.setState({
+            refresh: true
+        })
+    }
+
+    refreshComplete(timeStamp){
+        this.setState({
+            refresh: false,
+            lastRefresh: timeStamp
+        })
     }
 
     render() {
@@ -35,10 +56,10 @@ export default class Weather extends React.Component {
             <div style={ styles.container }>
                 {this.state.zips.map((zip) => {
                     return (
-                        <WeatherWeek key={zip} zip={zip}/>
+                        <WeatherWeek refresh={this.state.refresh} refreshComplete={this.refreshComplete} key={zip} zip={zip}/>
                     );
                 })}
-                
+                <div>Last Refresh: {this.state.lastRefresh}</div>
             </div>
         );
     }

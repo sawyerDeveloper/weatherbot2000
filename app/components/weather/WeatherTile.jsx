@@ -52,7 +52,7 @@ export default class WeatherTile extends React.Component {
         var day = new Date(0);
         day.setUTCSeconds(this.props.day.time);
         let dayNum = day.getDay();
-        
+
         return (
             <div onClick={(day) => this.props.openDetail(dayNum)} style={ styles.container }>
                 <div style={ styles.text }>
