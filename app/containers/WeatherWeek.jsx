@@ -8,7 +8,7 @@ export default class WeatherWeek extends React.Component {
         super(props)
         this.state = {
             dailyWeather:[],
-            hourlyWeather:[]
+            hourlyWeather: null
         }
         this.openDetail = this.openDetail.bind(this)
     }
@@ -24,9 +24,9 @@ export default class WeatherWeek extends React.Component {
 
     openDetail(day){
         fetch('/forecast/hourly/?time='+this.state.dailyWeather[day].time).then( res => res.json() ).then( _weather => {
-            
-            this.setState({ hourlyWeather: _weather });
-            console.log("hourly",_weather)
+            let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
+            this.setState({ hourlyWeather: hours });
+            console.log("hourly",hours)
         })
     }
 
@@ -57,7 +57,7 @@ export default class WeatherWeek extends React.Component {
 
         return (
             <div style={ styles.container }>
-                
+                <DayDetail hourly={this.state.hourlyWeather}/>
                 <div style={ styles.homeHeader }>This Week's Weather in Norfolk VA</div>
                     <div style={ styles.tileHolder }>
                         {this.state.dailyWeather.map((day) => {

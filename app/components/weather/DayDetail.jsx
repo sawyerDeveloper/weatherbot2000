@@ -1,6 +1,6 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import ReactAnimatedWeather from 'react-animated-weather';
+import HourlyDetail from './HourlyDetail.jsx';
 
 export default class DayDetail extends React.Component {
     constructor(props) {
@@ -10,34 +10,20 @@ export default class DayDetail extends React.Component {
     }
 
     render() {
-        if(this.props.day.length > 0){
-            console.log('should render DayDetails')
+        if(this.props.hourly == null){
+            console.log('should not render DayDetails')
             return null;
         }
-        
-        const iconMapping = {
-            "clear-day":"CLEAR_DAY",
-            "clear-night":"CLEAR_NIGHT",
-            "partly-cloudy-day":"PARTLY_CLOUDY_DAY",
-            "partly-cloudy-night":"PARTLY_CLOUDY_NIGHT",
-            "rain":"RAIN",
-            "cloudy":"CLOUDY",
-            "sleet":"SLEET",
-            "snow":"SNOW",
-            "wind":"WIND",
-            "fog":"FOG"
-        }
+        const dayMapping = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
         const styles = reactCSS({
         'default': {
                 container: {
                     borderRadius: '5px',
-                    width: '500px',
-                    height: '300px',
+                    width: '400px',
+                    height: '350px',
                     background: 'white',
                     textAlign: 'center'
-                },
-                text: {
-                    fontSize: '11px',
                 },
                 header: {
                     fontSize: '18px',
@@ -45,18 +31,22 @@ export default class DayDetail extends React.Component {
                 }
             },
         })
+
+        var day = new Date(0);
+        day.setUTCSeconds(this.props.hourly[0].time);
+        let dayName = dayMapping[day.getDay()];
+
         return (
 
             <div style={ styles.container }>
                 <div style={ styles.header }>
-                    10 Hour Forecast
+                    10 Hour Forecast for {dayName}
                 </div>
-                <ReactAnimatedWeather
-                    icon={iconMapping[this.props.day.icon]}
-                    color='black'
-                    size={64}
-                    animate={true}
-                />
+                {this.props.hourly.map((hour) => {
+                        return (
+                            <HourlyDetail hour={hour} key={hour.time}/>
+                        );
+                    })}
             </div>
         );
     }
