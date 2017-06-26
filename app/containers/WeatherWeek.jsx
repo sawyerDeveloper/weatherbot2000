@@ -1,7 +1,7 @@
 import React from 'react';
+import reactCSS from 'reactcss';
 import WeatherTile from '../components/weather/WeatherTile.jsx';
 import DayDetail from '../components/weather/DayDetail.jsx';
-import reactCSS from 'reactcss';
 export default class WeatherWeek extends React.Component {
 
     constructor(props) {
@@ -42,7 +42,6 @@ export default class WeatherWeek extends React.Component {
         //Get weather data through internal API
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
             this.setState({ dailyWeather: obj.weather, city: obj.city });
-            let date = new Date();
             this.props.refreshComplete(this.timeStamp());
         })
     }
@@ -51,7 +50,6 @@ export default class WeatherWeek extends React.Component {
         fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.state.dailyWeather[day].time).then( res => res.json() ).then( _weather => {
             let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
             this.setState({ hourlyWeather: hours });
-            console.log("hourly",hours)
         })
     }
 
