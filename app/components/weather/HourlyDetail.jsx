@@ -31,14 +31,14 @@ export default class HourlyDetail extends React.Component {
                     width: '400px',
                     height: '31px',
                     verticalAlign: 'middle',
-                    textAlign: 'center'
+                    textAlign: 'justify',
                 },
                 text: {
-                    fontSize: '12px',          
+                    fontSize: '10px',          
                 },
                 rowElement: {
                    display: 'inline-block',
-                   marginRight: '10px'
+                   marginRight: '8px'
                 }
             },
         })

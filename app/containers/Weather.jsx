@@ -48,12 +48,16 @@ export default class Weather extends React.Component {
                     height: 600,
                     background: 'grey',
                     borderRadius: '5px'
+                },
+                logo: {
+                    textAlign: 'center'
                 }
             },
         })
 
         return (
             <div style={ styles.container }>
+                <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
                 {this.state.zips.map((zip) => {
                     return (
                         <WeatherWeek refresh={this.state.refresh} refreshComplete={this.refreshComplete} key={zip} zip={zip}/>
