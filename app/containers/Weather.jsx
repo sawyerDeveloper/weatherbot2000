@@ -7,7 +7,7 @@ export default class Weather extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            zips: ["23324"],
+            zips: ["23510"],
             detailsDay: null,
             refresh: false,
             lastRefresh: ""

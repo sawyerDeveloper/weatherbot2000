@@ -12,12 +12,15 @@ router.get('/', (req, responseComplete) => {
       address: req.query.address
     }, (err, response) => {
       if (!err) {
+
         forecast
         .latitude(response.json.results[0].geometry.location.lat)
         .longitude(response.json.results[0].geometry.location.lng)
         .get()
         .then(res => {
-            responseComplete.json(res.daily.data)
+            let obj = {weather:res.daily.data, 
+                city: response.json.results[0].formatted_address.split(" ")[0] + " " + response.json.results[0].formatted_address.split(" ")[1]}
+            responseComplete.json(obj)
         })
         .catch(err => {                 
             console.log(err)
@@ -31,6 +34,7 @@ router.get('/hourly', (req, responseComplete) => {
       address: req.query.address
     }, (err, response) => {
       if (!err) {
+          
         forecast
         .latitude(response.json.results[0].geometry.location.lat)
         .longitude(response.json.results[0].geometry.location.lng)
