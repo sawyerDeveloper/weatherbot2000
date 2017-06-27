@@ -51,6 +51,10 @@ export default class Weather extends React.Component {
                 },
                 logo: {
                     textAlign: 'center'
+                },
+                refreshText: {
+                    fontSize: '16px',
+                    color: 'white'
                 }
             },
         })
@@ -63,7 +67,7 @@ export default class Weather extends React.Component {
                         <WeatherWeek refresh={this.state.refresh} refreshComplete={this.refreshComplete} key={zip} zip={zip}/>
                     );
                 })}
-                <div>Last Refresh: {this.state.lastRefresh}</div>
+                <div style={ styles.refreshText }>Last Refresh: {this.state.lastRefresh}</div>
             </div>
         );
     }
