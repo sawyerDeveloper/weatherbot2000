@@ -39,11 +39,22 @@ export default class WeatherWeek extends React.Component {
     }
 
     componentDidMount(){
+        this.updateWeeklyWeather()
+    }
+
+    updateWeeklyWeather(){
         //Get weather data through internal API
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
             this.setState({ dailyWeather: obj.weather, city: obj.city });
             this.props.refreshComplete(this.timeStamp());
         })
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.refresh){
+            this.com
+            this.updateWeeklyWeather()
+        }
     }
 
     openDetail(day){
@@ -87,7 +98,7 @@ export default class WeatherWeek extends React.Component {
                             return (
                                 <WeatherTile openDetail={this.openDetail} day={day} key={day.time}/>
                             );
-                    })}
+                        })}
                 </div>
             </div>
         );

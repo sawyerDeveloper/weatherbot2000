@@ -30,11 +30,10 @@ export default class HourlyDetail extends React.Component {
                     borderTop: '1px solid black',
                     width: '400px',
                     height: '31px',
-                    verticalAlign: 'middle',
                     textAlign: 'justify',
                 },
                 text: {
-                    fontSize: '10px',          
+                    fontSize: '10px',
                 },
                 rowElement: {
                    display: 'inline-block',
@@ -45,7 +44,7 @@ export default class HourlyDetail extends React.Component {
 
         var time = new Date(0);
         time.setUTCSeconds(this.props.hour.time);
-        var displayTime = time.getHours()
+        var displayTime = time.getHours();
         var suffix = "AM";
 
         if (displayTime >= 12) {
@@ -56,8 +55,7 @@ export default class HourlyDetail extends React.Component {
         if(displayTime == 0){
             displayTime = 12;
         }
-    
-
+        
         return (
             <div style={ styles.container }>
                 <div style={ styles.rowElement }>{displayTime}{suffix}</div>     
