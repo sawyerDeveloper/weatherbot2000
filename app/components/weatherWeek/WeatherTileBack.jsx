@@ -2,12 +2,14 @@ import React from 'react';
 import reactCSS from 'reactcss';
 import HourlyDetail from './HourlyDetail.jsx';
 
-export default class DayDetail extends React.Component {
+export default class WeatherTileBack extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+
         };
     }
+
 
     render() {
         if(this.props.hourly == null){
@@ -32,9 +34,7 @@ export default class DayDetail extends React.Component {
             },
         })
 
-        var day = new Date(0);
-        day.setUTCSeconds(this.props.hourly[0].time);
-        let dayName = dayMapping[day.getDay()];
+        let dayName = dayMapping[this.props.dayNum];
 
         return (
 

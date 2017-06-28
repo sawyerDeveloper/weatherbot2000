@@ -8,7 +8,6 @@ export default class Weather extends React.Component {
         super(props)
         this.state = {
             zips: ["23510"],
-            detailsDay: null,
             refresh: false,
             lastRefresh: ""
         }

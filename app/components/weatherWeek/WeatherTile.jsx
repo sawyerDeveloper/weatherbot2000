@@ -1,72 +1,98 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import ReactAnimatedWeather from 'react-animated-weather';
+import WeatherTileFront from './WeatherTileFront.jsx';
+import WeatherTileBack from './WeatherTileBack.jsx';
 
 export default class WeatherTile extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            
+            flipped: false,
+            hourly: null
         };
 
-        console.log(this.props.day)
+        this.flip = this.flip.bind(this);
+    }
+    
+    getHourly(){
+        fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.props.day.time).then( res => res.json() ).then( _weather => {
+            let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
+            this.setState({ 
+                hourly: hours,
+                flipped: true
+            });
+            console.log(hours)
+        })
+    }
+
+    flip(){
+        if(this.state.flipped == false){
+            this.getHourly()
+        } else {
+            this.setState({
+                hourly: null,
+                flipped: false
+            })
+        }
     }
 
     render() {
-        const dayMapping = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        const iconMapping = {
-            "clear-day":"CLEAR_DAY",
-            "clear-night":"CLEAR_NIGHT",
-            "partly-cloudy-day":"PARTLY_CLOUDY_DAY",
-            "partly-cloudy-night":"PARTLY_CLOUDY_NIGHT",
-            "rain":"RAIN",
-            "cloudy":"CLOUDY",
-            "sleet":"SLEET",
-            "snow":"SNOW",
-            "wind":"WIND",
-            "fog":"FOG"
-        }
         const styles = reactCSS({
         'default': {
                 container: {
-                    borderRadius: '5px',
-                    width: '100px',
-                    height: '100px',
-                    background: 'white',
+                    width: 100,
+                    height: 100,
+                    perspective: 800,
+                    display: 'block',
+                    position: 'relative',
                     float: 'left',
-                    marginRight: '5px',
-                    textAlign: 'center'
+                    marginRight: '5px'
                 },
-                text: {
-                    fontSize: '11px',
-                    
+                tile: {
+                    height: '100%',
+                    position: 'absolute',
+                    transition: 'all 1s ease-in-out',
+                    width: '100%',
+                    transformStyle: 'preserve-3d',              
                 },
-                dayText: {
-                    fontSize: '13px',
-                    fontWeight: 'bold'
+                tileFront: {
+                    width: 100,
+                    height: 100,
+                    position: 'absolute',
+                    zIndex: 2
+                },
+                tileBack: {
+                    width: 100,
+                    height: 100,
+                    backfaceVisibility: 'hidden',
+                    position: 'absolute',
+                    transform: 'rotateY(180deg)'
                 }
             },
-        })
+            'flipped': {
+                tile: {
+                    transform: 'rotateY(180deg)'
+                },
+                tileFront: {
+                    
+                },
+                tileBack: {
+                    
+                }
+            }
+        }, this.state)
 
         var day = new Date(0);
         day.setUTCSeconds(this.props.day.time);
         let dayNum = day.getDay();
 
         return (
-            <div onClick={(day) => this.props.openDetail(dayNum)} style={ styles.container }>
-                <div style={ styles.text }>
-                    <div style={ styles.dayText }>{dayMapping[dayNum]}</div>
-                    <div>Temp {Math.round(this.props.day.temperatureMax)}&#176;</div>
-                    <div>Precip {Math.trunc(this.props.day.precipProbability * 100)}%</div>
-                    <div>Humid {Math.round(this.props.day.humidity * 100)}%</div>
+            <div onClick={this.flip} style={ styles.container }>
+                <div style={ styles.tile }>
+                    <WeatherTileFront style={ styles.tileFront } dayNum={dayNum} day={this.props.day}/>
+                    <WeatherTileBack style={ styles.tileBack } dayNum={dayNum} hourly={this.state.hourly} zip={this.props.zip}/>
                 </div>
-                <ReactAnimatedWeather
-                    icon={iconMapping[this.props.day.icon]}
-                    color='black'
-                    size={32}
-                    animate={true}
-                />
             </div>
         );
     }

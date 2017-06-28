@@ -1,17 +1,15 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import WeatherTile from '../components/weatherWeek/WeatherTile.jsx';
-import DayDetail from '../components/weatherWeek/DayDetail.jsx';
+
 export default class WeatherWeek extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
             dailyWeather:[],
-            city: "",
-            hourlyWeather: null
+            city: ""
         }
-        this.openDetail = this.openDetail.bind(this)
     }
 
     timeStamp() {
@@ -52,22 +50,8 @@ export default class WeatherWeek extends React.Component {
 
     componentWillReceiveProps(nextProps){
         if(nextProps.refresh){
-            this.com
             this.updateWeeklyWeather()
         }
-    }
-
-    openDetail(day){
-        fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.state.dailyWeather[day].time).then( res => res.json() ).then( _weather => {
-            let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
-            this.setState({ hourlyWeather: hours });
-        })
-    }
-
-    closeDetails(){
-        this.setState({
-            hourlyWeather: null
-        })
     }
 
     render() {
@@ -91,12 +75,11 @@ export default class WeatherWeek extends React.Component {
 
         return (
             <div style={ styles.container }>
-                <DayDetail hourly={this.state.hourlyWeather}/>
                 <div style={ styles.homeHeader }>This Week's Weather in {this.state.city}</div>
                     <div style={ styles.tileHolder }>
                         {this.state.dailyWeather.map((day) => {
                             return (
-                                <WeatherTile openDetail={this.openDetail} day={day} key={day.time}/>
+                                <WeatherTile zip={this.props.zip} hourlyWeather={this.state.hourlyWeather} day={day} key={day.time} />
                             );
                         })}
                 </div>
