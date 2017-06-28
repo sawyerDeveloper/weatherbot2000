@@ -1,6 +1,6 @@
 import React from 'react';
-import WeatherWeek from '../containers/WeatherWeek.jsx';
-
+import WeatherWeek from './WeatherWeek.jsx';
+import ZipCompare from '../components/weather/ZipCompare.jsx';
 import reactCSS from 'reactcss';
 export default class Weather extends React.Component {
 
@@ -15,7 +15,7 @@ export default class Weather extends React.Component {
 
         this.refreshComplete = this.refreshComplete.bind(this);
         this.refreshData = this.refreshData.bind(this);
-        console.log('weather');
+        this.dispatchZip = this.dispatchZip.bind(this);
     }
     
     componentDidMount(){
@@ -33,6 +33,16 @@ export default class Weather extends React.Component {
             refresh: false,
             lastRefresh: timeStamp
         })
+    }
+
+    dispatchZip(zip){
+        console.log(zip)
+        let newZips = this.state.zips;
+        newZips.push(zip);
+        this.setState({
+            zips: newZips
+        })
+        console.log(newZips)
     }
 
     render() {
@@ -69,7 +79,7 @@ export default class Weather extends React.Component {
                 }
             },
         })
-
+        
         return (
             <div style={ styles.container }>
                 <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
@@ -84,6 +94,7 @@ export default class Weather extends React.Component {
                     </button>
                     <div style={ styles.refreshText }>Last Refresh: {this.state.lastRefresh}</div>
                 </div>
+                <ZipCompare dispatchZip={this.dispatchZip} />
             </div>
         );
     }

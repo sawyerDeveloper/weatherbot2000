@@ -1,7 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import WeatherTile from '../components/weather/WeatherTile.jsx';
-import DayDetail from '../components/weather/DayDetail.jsx';
+import WeatherTile from '../components/weatherWeek/WeatherTile.jsx';
+import DayDetail from '../components/weatherWeek/DayDetail.jsx';
 export default class WeatherWeek extends React.Component {
 
     constructor(props) {
