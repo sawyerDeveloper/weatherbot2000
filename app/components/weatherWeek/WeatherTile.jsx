@@ -71,11 +71,11 @@ export default class WeatherTile extends React.Component {
                     display: 'block',
                     position: 'relative',
                     float: 'left',
-                    marginRight: '5px'
+                    marginRight: 5
                 },
                 tile: {
                     height: '100%',
-                    position: 'fixed',
+                    position: 'relative',
                     transition: 'all 1s ease-in-out',
                     width: '100%',
                     transformStyle: 'preserve-3d',
@@ -85,13 +85,20 @@ export default class WeatherTile extends React.Component {
                     height: 100,
                     position: 'absolute',
                     backfaceVisibility: 'hidden',
-                    zIndex: 2,
-                    borderRadius: '5px',
+                    borderRadius: 5,
                     background: 'white',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    transition: 'all 1s ease-in-out',
+                },
+                tileFrontText: {
+                    fontSize: 11
+                },
+                tileFrontDayText: {
+                    fontSize: 13,
+                    fontWeight: 'bold'
                 },
                 tileBack: {
-                    borderRadius: '5px',
+                    borderRadius: 5,
                     background: 'white',
                     textAlign: 'center',
                     width: 360,
@@ -100,11 +107,10 @@ export default class WeatherTile extends React.Component {
                     left: -100,
                     top: -100,
                     transform: 'rotateY(180deg)',
-                    backfaceVisibility: 'hidden',
-                    zIndex: 1000
+                    backfaceVisibility: 'hidden'
                 },
                 tileBackHeader: {
-                    fontSize: '18px',
+                    fontSize: 18,
                     fontWeight: 'bold'
                 },
                 hourlyDetailContainer: {
@@ -115,8 +121,8 @@ export default class WeatherTile extends React.Component {
                 },
                 hourlyDetailRowElement: {
                     display: 'inline-block',
-                    marginRight: '8px',
-                    fontSize: 10
+                    marginRight: 10,
+                    fontSize: 11
                 }
             },
             'flipped': {
@@ -125,6 +131,9 @@ export default class WeatherTile extends React.Component {
                 },
                 tileBack:{
                     zIndex: 1000
+                },
+                tileFront: {
+                    transform: 'scale3d(4,4,4)'
                 }
             }
         }, this.state);
@@ -138,8 +147,8 @@ export default class WeatherTile extends React.Component {
             <div onClick={this.flip} style={ styles.container }>
                 <div style={ styles.tile }>
                     <div style={ styles.tileFront }>
-                        <div style={ styles.text }>
-                            <div style={ styles.dayText }>{dayMapping[this.props.dayNum]}</div>
+                        <div style={ styles.tileFrontText }>
+                            <div style={ styles.tileFrontDayText }>{dayMapping[dayNum]}</div>
                             <div>Temp {Math.round(this.props.day.temperatureMax)}&#176;</div>
                             <div>Precip {Math.trunc(this.props.day.precipProbability * 100)}%</div>
                             <div>Humid {Math.round(this.props.day.humidity * 100)}%</div>

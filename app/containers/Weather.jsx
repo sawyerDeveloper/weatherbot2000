@@ -48,33 +48,32 @@ export default class Weather extends React.Component {
         const styles = reactCSS({
         'default': {
                 container: {
-                    position: 'absolute',
+                    position: 'relative',
                     margin: 'auto',
-                    top: '0',
-                    right: '0',
-                    bottom: '0',
-                    left: '0',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
                     width: 850,
                     height: 600,
                     background: 'grey',
-                    borderRadius: '5px'
+                    borderRadius: 5
                 },
                 logo: {
                     textAlign: 'center'
                 },
                 refreshText: {
-                    fontSize: '16px',
+                    fontSize: 16,
                     color: 'white',
                     float: 'left'
                 },
                 refreshButton: {
                     color: 'black',
-                    borderRadius: '5px',
+                    borderRadius: 5,
                     float: 'left'
                 },
                 refreshHolder: {
-                    float: 'none',
-                    leftMargin: '5px'
+
                 }
             },
         })
@@ -93,7 +92,9 @@ export default class Weather extends React.Component {
                     </button>
                     <div style={ styles.refreshText }>Last Refresh: {this.state.lastRefresh}</div>
                 </div>
-                <ZipCompare dispatchZip={this.dispatchZip} />
+                <div>
+                    <ZipCompare dispatchZip={this.dispatchZip} />
+                </div>
             </div>
         );
     }
