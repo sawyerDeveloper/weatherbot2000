@@ -75,7 +75,7 @@ export default class WeatherTile extends React.Component {
                 },
                 tile: {
                     height: '100%',
-                    position: 'absolute',
+                    position: 'fixed',
                     transition: 'all 1s ease-in-out',
                     width: '100%',
                     transformStyle: 'preserve-3d',
@@ -94,19 +94,26 @@ export default class WeatherTile extends React.Component {
                     borderRadius: '5px',
                     background: 'white',
                     textAlign: 'center',
-                    width: 400,
+                    width: 360,
                     height: 350,
                     position: 'absolute',
+                    left: -100,
+                    top: -100,
                     transform: 'rotateY(180deg)',
                     backfaceVisibility: 'hidden',
+                    zIndex: 1000
                 },
-                hourlyDetail: {
+                tileBackHeader: {
+                    fontSize: '18px',
+                    fontWeight: 'bold'
+                },
+                hourlyDetailContainer: {
                     borderTop: '1px solid black',
-                    width: 400,
+                    width: 360,
                     height: 31,
-                    textAlign: 'justify',
+                    textAlign: 'center',
                 },
-                rowElement: {
+                hourlyDetailRowElement: {
                     display: 'inline-block',
                     marginRight: '8px',
                     fontSize: 10
@@ -117,7 +124,7 @@ export default class WeatherTile extends React.Component {
                     transform: 'rotateY(180deg)'
                 },
                 tileBack:{
-
+                    zIndex: 1000
                 }
             }
         }, this.state);
@@ -145,7 +152,7 @@ export default class WeatherTile extends React.Component {
                         />
                     </div>
                     <div style={ styles.tileBack }>
-                        <div style={ styles.header }>
+                        <div style={ styles.tileBackHeader }>
                             10 Hour Forecast for {dayName}
                         </div>
                         {this.state.hourly.map((hour) => {
@@ -163,19 +170,19 @@ export default class WeatherTile extends React.Component {
                                 displayTime = 12;
                             }
                                 return (
-                                    <div style={ styles.hourlyDetail } key={hour.time}>
-                                        <div style={ styles.rowElement }>{displayTime}{suffix}</div>     
+                                    <div style={ styles.hourlyDetailContainer } key={hour.time}>
+                                        <div style={ styles.hourlyDetailRowElement }>{displayTime}{suffix}</div>     
                                         <ReactAnimatedWeather
-                                            style={ styles.rowElement }
+                                            style={ styles.hourlyDetailRowElement }
                                             icon={iconMapping[hour.icon]}
                                             color='black'
                                             size={24}
                                             animate={false}
                                         />
-                                        <div style={ styles.rowElement }>{hour.summary}</div>
-                                        <div style={ styles.rowElement }>Temp {Math.round(hour.temperature)}&#176;</div>
-                                        <div style={ styles.rowElement }>Precip {Math.trunc(hour.precipProbability * 100)}%</div>
-                                        <div style={ styles.rowElement }>Humid {Math.round(hour.humidity * 100)}%</div>
+                                        <div style={ styles.hourlyDetailRowElement }>{hour.summary}</div>
+                                        <div style={ styles.hourlyDetailRowElement }>Temp {Math.round(hour.temperature)}&#176;</div>
+                                        <div style={ styles.hourlyDetailRowElement }>Precip {Math.trunc(hour.precipProbability * 100)}%</div>
+                                        <div style={ styles.hourlyDetailRowElement }>Humid {Math.round(hour.humidity * 100)}%</div>
                                     </div>
                                 );
                             })}
