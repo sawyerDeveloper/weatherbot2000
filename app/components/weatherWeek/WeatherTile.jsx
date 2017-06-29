@@ -11,10 +11,12 @@ export default class WeatherTile extends React.Component {
         super(props);
         this.state = {
             flipped: false,
+            flipping: false,
             hourly: []
         };
 
         this.flip = this.flip.bind(this);
+        this.doneFlipping = this.doneFlipping.bind(this);
     }
     
     componentDidMount(){
@@ -26,25 +28,25 @@ export default class WeatherTile extends React.Component {
             console.log(hours)
         })
     }
-    getHourly(){
-        fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.props.day.time).then( res => res.json() ).then( _weather => {
-            let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
-            this.setState({ 
-                hourly: hours,
-                flipped: true
-            });
-            console.log(hours)
+
+    doneFlipping(){
+        this.setState({
+            flipping: false
         })
     }
 
     flip(){
         if(this.state.flipped == false){
-            this.getHourly()
+            this.setState({ 
+                flipped: true,
+                flipping: true
+            });
+            
         } else {
             this.setState({
-                //hourly: null,
                 flipped: false
             })
+            setTimeout(this.doneFlipping, 1000);
         }
     }
 
@@ -71,7 +73,9 @@ export default class WeatherTile extends React.Component {
                     display: 'block',
                     position: 'relative',
                     float: 'left',
-                    marginRight: 5
+                    marginRight: 5,
+                    zIndex: 1
+                    
                 },
                 tile: {
                     height: '100%',
@@ -79,6 +83,7 @@ export default class WeatherTile extends React.Component {
                     transition: 'all 1s ease-in-out',
                     width: '100%',
                     transformStyle: 'preserve-3d',
+                    
                 },
                 tileFront: {
                     width: 100,
@@ -89,6 +94,7 @@ export default class WeatherTile extends React.Component {
                     background: 'white',
                     textAlign: 'center',
                     transition: 'all 1s ease-in-out',
+                    
                 },
                 tileFrontText: {
                     fontSize: 11
@@ -107,7 +113,8 @@ export default class WeatherTile extends React.Component {
                     left: -100,
                     top: -100,
                     transform: 'rotateY(180deg)',
-                    backfaceVisibility: 'hidden'
+                    backfaceVisibility: 'hidden',
+                    overflow: 'hidden'
                 },
                 tileBackHeader: {
                     fontSize: 18,
@@ -126,14 +133,22 @@ export default class WeatherTile extends React.Component {
                 }
             },
             'flipped': {
+                container: {
+                    zIndex: 1000
+                },
                 tile: {
                     transform: 'rotateY(180deg)'
                 },
                 tileBack:{
-                    zIndex: 1000
+                    
                 },
                 tileFront: {
                     transform: 'scale3d(4,4,4)'
+                }
+            },
+            'flipping': {
+                container: {
+                    zIndex: 1000
                 }
             }
         }, this.state);

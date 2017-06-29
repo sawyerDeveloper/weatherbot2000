@@ -48,7 +48,7 @@ export default class Weather extends React.Component {
         const styles = reactCSS({
         'default': {
                 container: {
-                    position: 'relative',
+                    position: 'absolute',
                     margin: 'auto',
                     top: 0,
                     right: 0,
@@ -57,7 +57,7 @@ export default class Weather extends React.Component {
                     width: 850,
                     height: 600,
                     background: 'grey',
-                    borderRadius: 5
+                    borderRadius: 10
                 },
                 logo: {
                     textAlign: 'center'
@@ -73,7 +73,7 @@ export default class Weather extends React.Component {
                     float: 'left'
                 },
                 refreshHolder: {
-
+                    position: 'relative'
                 }
             },
         })

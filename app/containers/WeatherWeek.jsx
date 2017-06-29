@@ -58,11 +58,10 @@ export default class WeatherWeek extends React.Component {
         const styles = reactCSS({
         'default': {
                 container: {
-                    marginTop: 20
+                    marginTop: 20,
                 },
                 tileHolder: {
-                    float: 'none',
-                    padding: 5,
+                    padding: 5
                 },
                 homeHeader: {
                     textAlign: 'center',
