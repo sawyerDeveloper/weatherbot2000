@@ -81,11 +81,8 @@ export default class Weather extends React.Component {
         return (
             <div style={ styles.container }>
                 <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
-                {this.state.zips.map((zip) => {
-                    return (
-                        <WeatherWeek refresh={this.state.refresh} refreshComplete={this.refreshComplete} key={zip} zip={zip}/>
-                    );
-                })}
+
+                <WeatherWeek tileOpened={this.tileOpened} refresh={this.state.refresh} refreshComplete={this.refreshComplete} zip={this.state.zips[0]} />
                 <div style={ styles.refeshHolder }>
                     <button style={ styles.refreshButton } onClick={this.refreshData}>
                         Refresh
@@ -95,6 +92,11 @@ export default class Weather extends React.Component {
                 <div>
                     <ZipCompare dispatchZip={this.dispatchZip} />
                 </div>
+                {this.state.zips.length > 1 ?
+                    <WeatherWeek tileOpened={this.tileOpened} refresh={this.state.refresh} refreshComplete={this.refreshComplete} zip={this.state.zips[1]} />:
+                    null
+                }
+                
             </div>
         );
     }
