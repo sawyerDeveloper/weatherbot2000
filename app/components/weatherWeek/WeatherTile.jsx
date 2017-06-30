@@ -4,6 +4,7 @@ import ReactAnimatedWeather from 'react-animated-weather';
 import WeatherTileFront from './WeatherTileFront.jsx';
 import WeatherTileBack from './WeatherTileBack.jsx';
 import HourlyDetail from './HourlyDetail.jsx';
+import {TweenMax} from "gsap";
 
 export default class WeatherTile extends React.Component {
 
@@ -18,8 +19,9 @@ export default class WeatherTile extends React.Component {
         this.flip = this.flip.bind(this);
         this.doneFlipping = this.doneFlipping.bind(this);
     }
-    
+
     componentDidMount(){
+        
         fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.props.day.time).then( res => res.json() ).then( _weather => {
             let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
             this.setState({ 
@@ -27,6 +29,12 @@ export default class WeatherTile extends React.Component {
             });
             console.log(hours)
         })
+        
+    }
+
+    componentWillEnter () {
+        let container = this.container;
+        TweenMax.fromTo(container, .7, {x: 1000}, {x: 0, delay: this.props.animDelay});
     }
 
     doneFlipping(){
@@ -159,7 +167,7 @@ export default class WeatherTile extends React.Component {
         let dayName = dayMapping[dayNum];
 
         return (
-            <div onClick={this.flip} style={ styles.container }>
+            <div onClick={this.flip} style={ styles.container } ref={c => this.container = c}>
                 <div style={ styles.tile }>
                     <div style={ styles.tileFront }>
                         <div style={ styles.tileFrontText }>
@@ -216,8 +224,3 @@ export default class WeatherTile extends React.Component {
         );
     }
 }
-/*
-
-
-
-*/

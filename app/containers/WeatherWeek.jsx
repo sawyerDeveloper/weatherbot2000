@@ -1,6 +1,9 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import WeatherTile from '../components/weatherWeek/WeatherTile.jsx';
+import GSAP from 'react-gsap-enhancer';
+import TransitionGroup from 'react-addons-transition-group';
+
 
 export default class WeatherWeek extends React.Component {
 
@@ -8,13 +11,14 @@ export default class WeatherWeek extends React.Component {
         super(props)
         this.state = {
             dailyWeather:[],
-            city: ""
+            city: "",
+            
         }
     }
 
     timeStamp() {
         var date = new Date();
-        var hour = date.getHours()
+        var hour = date.getHours();
         var suffix = "AM";
         if (hour >= 12) {
             hour = hour - 12;
@@ -37,7 +41,7 @@ export default class WeatherWeek extends React.Component {
     }
 
     componentDidMount(){
-        this.updateWeeklyWeather()
+        this.updateWeeklyWeather();
     }
 
     updateWeeklyWeather(){
@@ -50,7 +54,7 @@ export default class WeatherWeek extends React.Component {
 
     componentWillReceiveProps(nextProps){
         if(nextProps.refresh){
-            this.updateWeeklyWeather()
+            this.updateWeeklyWeather();
         }
     }
 
@@ -71,16 +75,19 @@ export default class WeatherWeek extends React.Component {
                 }
             },
         })
-
+        var delay = 0;
         return (
             <div style={ styles.container }>
                 <div style={ styles.homeHeader }>This Week's Weather in {this.state.city}</div>
                     <div style={ styles.tileHolder }>
-                        {this.state.dailyWeather.map((day) => {
-                            return (
-                                <WeatherTile zip={this.props.zip} hourlyWeather={this.state.hourlyWeather} day={day} key={day.time} />
-                            );
-                        })}
+                        <TransitionGroup>
+                            {this.state.dailyWeather.map((day) => {
+                                delay += 0.07;
+                                return (
+                                    <WeatherTile animDelay={delay} zip={this.props.zip} hourlyWeather={this.state.hourlyWeather} day={day} key={day.time} />
+                                );
+                            })}
+                        </TransitionGroup>
                 </div>
             </div>
         );

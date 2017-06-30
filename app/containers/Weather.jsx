@@ -57,7 +57,8 @@ export default class Weather extends React.Component {
                     width: 850,
                     height: 600,
                     background: 'grey',
-                    borderRadius: 10
+                    borderRadius: 10,
+                    display: 'block'
                 },
                 logo: {
                     textAlign: 'center'
@@ -73,7 +74,11 @@ export default class Weather extends React.Component {
                     float: 'left'
                 },
                 refreshHolder: {
-                    position: 'relative'
+                    position: 'relative',
+                    marginLeft: 20
+                },
+                zipCompareHolder: {
+
                 }
             },
         })
@@ -81,7 +86,6 @@ export default class Weather extends React.Component {
         return (
             <div style={ styles.container }>
                 <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
-
                 <WeatherWeek tileOpened={this.tileOpened} refresh={this.state.refresh} refreshComplete={this.refreshComplete} zip={this.state.zips[0]} />
                 <div style={ styles.refeshHolder }>
                     <button style={ styles.refreshButton } onClick={this.refreshData}>
@@ -89,14 +93,13 @@ export default class Weather extends React.Component {
                     </button>
                     <div style={ styles.refreshText }>Last Refresh: {this.state.lastRefresh}</div>
                 </div>
-                <div>
+                <div style={ styles.zipCompare }>
                     <ZipCompare dispatchZip={this.dispatchZip} />
                 </div>
                 {this.state.zips.length > 1 ?
-                    <WeatherWeek tileOpened={this.tileOpened} refresh={this.state.refresh} refreshComplete={this.refreshComplete} zip={this.state.zips[1]} />:
-                    null
+                    <WeatherWeek tileOpened={this.tileOpened} refresh={this.state.refresh} refreshComplete={this.refreshComplete} zip={this.state.zips[1]} />
+                    : null
                 }
-                
             </div>
         );
     }
