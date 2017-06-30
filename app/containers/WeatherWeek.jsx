@@ -48,6 +48,8 @@ export default class WeatherWeek extends React.Component {
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
             this.setState({ dailyWeather: obj.weather, city: obj.city });
             this.props.refreshComplete(this.timeStamp());
+            let header = this.header;
+            TweenLite.fromTo(header, 1.4, {opacity: 0}, {opacity: 1, delay: 1});
         })
     }
 
@@ -70,14 +72,15 @@ export default class WeatherWeek extends React.Component {
                     textAlign: 'center',
                     fontWeight: 'bold',
                     color: 'white',
-                    fontSize: 18
+                    fontSize: 18,
+                    opacity: 0
                 }
             },
         })
         var delay = 0;
         return (
             <div style={ styles.container }>
-                <div style={ styles.homeHeader }>This Week's Weather in {this.state.city}</div>
+                <div style={ styles.homeHeader } ref={c => this.header = c}>This Week's Weather in {this.state.city}</div>
                     <div style={ styles.tileHolder }>
                         <TransitionGroup>
                             {this.state.dailyWeather.map((day) => {
