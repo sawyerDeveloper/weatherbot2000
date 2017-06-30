@@ -3,7 +3,7 @@ import reactCSS from 'reactcss';
 import WeatherTile from '../components/weatherWeek/WeatherTile.jsx';
 import GSAP from 'react-gsap-enhancer';
 import TransitionGroup from 'react-addons-transition-group';
-
+import {TweenLite} from "gsap";
 
 export default class WeatherWeek extends React.Component {
 
@@ -12,7 +12,6 @@ export default class WeatherWeek extends React.Component {
         this.state = {
             dailyWeather:[],
             city: "",
-            
         }
     }
 
@@ -82,7 +81,7 @@ export default class WeatherWeek extends React.Component {
                     <div style={ styles.tileHolder }>
                         <TransitionGroup>
                             {this.state.dailyWeather.map((day) => {
-                                delay += 0.07;
+                                delay += 0.08;
                                 return (
                                     <WeatherTile animDelay={delay} zip={this.props.zip} hourlyWeather={this.state.hourlyWeather} day={day} key={day.time} />
                                 );
