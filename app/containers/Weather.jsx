@@ -2,6 +2,8 @@ import React from 'react';
 import WeatherWeek from './WeatherWeek.jsx';
 import ZipCompare from '../components/weather/ZipCompare.jsx';
 import reactCSS from 'reactcss';
+import {TweenLite} from "gsap";
+
 export default class Weather extends React.Component {
 
     constructor(props) {
@@ -18,7 +20,7 @@ export default class Weather extends React.Component {
     }
     
     componentDidMount(){
-        //var intervalID = this.setInterval(this.refreshData, 60000);
+        this.countdown = setInterval(this.refreshData, 60000);
     }
 
     refreshData(){

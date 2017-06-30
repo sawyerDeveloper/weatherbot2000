@@ -41,6 +41,8 @@ export default class WeatherWeek extends React.Component {
 
     componentDidMount(){
         this.updateWeeklyWeather();
+        let header = this.header;
+        TweenLite.fromTo(header, 1.4, {opacity: 0}, {opacity: 1, delay: 1.5});
     }
 
     updateWeeklyWeather(){
@@ -48,8 +50,6 @@ export default class WeatherWeek extends React.Component {
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
             this.setState({ dailyWeather: obj.weather, city: obj.city });
             this.props.refreshComplete(this.timeStamp());
-            let header = this.header;
-            TweenLite.fromTo(header, 1.4, {opacity: 0}, {opacity: 1, delay: 1});
         })
     }
 
