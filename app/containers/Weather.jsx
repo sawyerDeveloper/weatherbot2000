@@ -11,16 +11,29 @@ export default class Weather extends React.Component {
         this.state = {
             zips: ["23510"],
             refresh: false,
-            lastRefresh: ""
+            lastRefresh: "",
+            openTile: null
         }
 
+        this.openTile = this.openTile.bind(this);
+        this.firstWeekMountComplete = this.firstWeekMountComplete.bind(this);
         this.refreshComplete = this.refreshComplete.bind(this);
         this.refreshData = this.refreshData.bind(this);
         this.dispatchZip = this.dispatchZip.bind(this);
     }
+
+    firstWeekMountComplete(){
+
+    }
+
+    openTile(tileNum){
+        this.setState({
+            openTile: tileNum
+        })
+    }
     
     componentDidMount(){
-        this.countdown = setInterval(this.refreshData, 60000);
+        this.countdown = setInterval(this.refreshData, 30000);
     }
 
     refreshData(){
@@ -88,7 +101,13 @@ export default class Weather extends React.Component {
         return (
             <div style={ styles.container }>
                 <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
-                <WeatherWeek tileOpened={this.tileOpened} refresh={this.state.refresh} refreshComplete={this.refreshComplete} zip={this.state.zips[0]} />
+                <WeatherWeek 
+                    firstWeekMountComplete={this.firstWeekMountComplete} 
+                    openTile={this.openTile} 
+                    openedTile={this.state.openTile}
+                    refresh={this.state.refresh} 
+                    refreshComplete={this.refreshComplete} 
+                    zip={this.state.zips[0]} />
                 <div style={ styles.refeshHolder }>
                     <button style={ styles.refreshButton } onClick={this.refreshData}>
                         Refresh
@@ -99,7 +118,12 @@ export default class Weather extends React.Component {
                     <ZipCompare dispatchZip={this.dispatchZip} />
                 </div>
                 {this.state.zips.length > 1 ?
-                    <WeatherWeek tileOpened={this.tileOpened} refresh={this.state.refresh} refreshComplete={this.refreshComplete} zip={this.state.zips[1]} />
+                    <WeatherWeek 
+                        openTile={this.openTile} 
+                        openedTile={this.state.openTile}
+                        refresh={this.state.refresh} 
+                        refreshComplete={this.refreshComplete} 
+                        zip={this.state.zips[1]} />
                     : null
                 }
             </div>

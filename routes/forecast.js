@@ -18,7 +18,11 @@ router.get('/', (req, responseComplete) => {
         .longitude(response.json.results[0].geometry.location.lng)
         .get()
         .then(res => {
-            let obj = {weather:res.daily.data, 
+
+            var weekArray = res.daily.data
+            //not sure about 7 days wording
+            //weekArray.shift()
+            let obj = {weather:weekArray, 
                 city: response.json.results[0].formatted_address.split(" ")[0] + " " + response.json.results[0].formatted_address.split(" ")[1]}
             responseComplete.json(obj)
         })

@@ -17,23 +17,34 @@ export default class WeatherTile extends React.Component {
         };
         this.flip = this.flip.bind(this);
         this.doneFlipping = this.doneFlipping.bind(this);
+        this.tweenInComplete = this.tweenInComplete.bind(this);
     }
 
     componentDidMount(){
+
+    }
+
+    componentWillEnter () {
+        let container = this.container;
+        TweenLite.fromTo(container, .7, {x: 1000}, {x: 0, delay: this.props.animDelay, onComplete:this.tweenInComplete});
+    }
+
+    
+    tweenInComplete(){
+        //alert parent that animation completed
+        this.props.tileMountComplete(this.props.tileNum);
+
+        //wait for animation to end for smoothness before data loading
         fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.props.day.time).then( res => res.json() ).then( _weather => {
             let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
             this.setState({ 
                 hourly: hours
             });
+            
             console.log(hours)
         })
     }
-
-    componentWillEnter () {
-        let container = this.container;
-        TweenLite.fromTo(container, .7, {x: 1000}, {x: 0, delay: this.props.animDelay});
-    }
-
+    
     doneFlipping(){
         this.setState({
             flipping: false
@@ -158,9 +169,9 @@ export default class WeatherTile extends React.Component {
             }
         }, this.state);
 
-        var day = new Date(0);
-        day.setUTCSeconds(this.props.day.time);
-        let dayNum = day.getDay();
+        var newDay = new Date(0);
+        newDay.setUTCSeconds(this.props.day.time);
+        let dayNum = newDay.getDay();
         let dayName = dayMapping[dayNum];
 
         return (

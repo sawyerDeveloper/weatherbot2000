@@ -26,6 +26,10 @@ export default class Intro extends React.Component {
                     left: '0',
                     width: '640px',
                     height: '360px',
+                    textAlign: 'center'
+                },
+                skipButton: {
+
                 }
             },
         })
@@ -43,6 +47,9 @@ export default class Intro extends React.Component {
                     opts={opts}
                     onEnd={this.onEnd}
                 />
+                <button style={ styles.skipButton } onClick={this.onEnd}>
+                    Skip Intro
+                </button>
             </div>
         );
     };

@@ -13,6 +13,9 @@ export default class WeatherWeek extends React.Component {
             dailyWeather:[],
             city: "",
         }
+        //Or 7
+        this.tileCount = 8;
+        this.tileMountComplete = this.tileMountComplete.bind(this);
     }
 
     timeStamp() {
@@ -39,6 +42,13 @@ export default class WeatherWeek extends React.Component {
             suffix;
     }
 
+    tileMountComplete(tileNum){
+        console.log('tileMountComplete',tileNum);
+        if(tileNum == this.tileCount){
+            this.props.firstWeekMountComplete();
+        }
+    }
+
     componentDidMount(){
         this.updateWeeklyWeather();
         let header = this.header;
@@ -48,6 +58,7 @@ export default class WeatherWeek extends React.Component {
     updateWeeklyWeather(){
         //Get weather data through internal API
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
+            console.log(obj.weather)
             this.setState({ dailyWeather: obj.weather, city: obj.city });
             this.props.refreshComplete(this.timeStamp());
         })
@@ -63,7 +74,7 @@ export default class WeatherWeek extends React.Component {
         const styles = reactCSS({
         'default': {
                 container: {
-                    marginTop: 20,
+                    marginTop: 20
                 },
                 tileHolder: {
                     padding: 5
@@ -78,6 +89,7 @@ export default class WeatherWeek extends React.Component {
             },
         })
         var delay = 0;
+        var tileNum = 0;
         return (
             <div style={ styles.container }>
                 <div style={ styles.homeHeader } ref={c => this.header = c}>This Week's Weather in {this.state.city}</div>
@@ -85,8 +97,18 @@ export default class WeatherWeek extends React.Component {
                         <TransitionGroup>
                             {this.state.dailyWeather.map((day) => {
                                 delay += 0.08;
+                                tileNum++;
                                 return (
-                                    <WeatherTile animDelay={delay} zip={this.props.zip} hourlyWeather={this.state.hourlyWeather} day={day} key={day.time} />
+                                    <WeatherTile 
+                                        openedTile={this.props.openedTile}
+                                        openTile={this.props.openTile}
+                                        tileMountComplete={this.tileMountComplete} 
+                                        animDelay={delay} 
+                                        zip={this.props.zip} 
+                                        hourlyWeather={this.state.hourlyWeather} 
+                                        day={day} 
+                                        tileNum={tileNum}
+                                        key={day.time} />
                                 );
                             })}
                         </TransitionGroup>
