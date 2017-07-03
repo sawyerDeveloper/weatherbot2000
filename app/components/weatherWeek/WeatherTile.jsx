@@ -24,6 +24,14 @@ export default class WeatherTile extends React.Component {
 
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.openedTile == this.props.tileNum){
+            this.flip();
+        }else if(nextProps.openedTile == 0 && this.state.flipped){
+            this.flip();
+        }
+    }
+
     componentWillEnter () {
         let container = this.container;
         TweenLite.fromTo(container, .7, {x: 1000}, {x: 0, delay: this.props.animDelay, onComplete:this.tweenInComplete});
@@ -175,7 +183,7 @@ export default class WeatherTile extends React.Component {
         let dayName = dayMapping[dayNum];
 
         return (
-            <div onClick={this.flip} style={ styles.container } ref={c => this.container = c}>
+            <div onClick={(tileNum) => this.props.openTile(this.props.tileNum)} style={ styles.container } ref={c => this.container = c}>
                 <div style={ styles.tile }>
                     <div style={ styles.tileFront }>
                         <div style={ styles.tileFrontText }>

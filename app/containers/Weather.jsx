@@ -12,7 +12,7 @@ export default class Weather extends React.Component {
             zips: ["23510"],
             refresh: false,
             lastRefresh: "",
-            openTile: null
+            openedTile: 0
         }
 
         this.openTile = this.openTile.bind(this);
@@ -27,11 +27,18 @@ export default class Weather extends React.Component {
     }
 
     openTile(tileNum){
-        this.setState({
-            openTile: tileNum
-        })
+        console.log('openTile',tileNum)
+        if(this.state.openedTile == 0){
+            this.setState({
+                openedTile: tileNum
+            })
+        }else{
+            this.setState({
+                openedTile: 0
+            })
+        }
     }
-    
+
     componentDidMount(){
         this.countdown = setInterval(this.refreshData, 30000);
     }
@@ -104,7 +111,7 @@ export default class Weather extends React.Component {
                 <WeatherWeek 
                     firstWeekMountComplete={this.firstWeekMountComplete} 
                     openTile={this.openTile} 
-                    openedTile={this.state.openTile}
+                    openedTile={this.state.openedTile}
                     refresh={this.state.refresh} 
                     refreshComplete={this.refreshComplete} 
                     zip={this.state.zips[0]} />
@@ -120,7 +127,7 @@ export default class Weather extends React.Component {
                 {this.state.zips.length > 1 ?
                     <WeatherWeek 
                         openTile={this.openTile} 
-                        openedTile={this.state.openTile}
+                        openedTile={this.state.openedTile}
                         refresh={this.state.refresh} 
                         refreshComplete={this.refreshComplete} 
                         zip={this.state.zips[1]} />

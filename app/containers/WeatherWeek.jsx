@@ -44,7 +44,7 @@ export default class WeatherWeek extends React.Component {
 
     tileMountComplete(tileNum){
         console.log('tileMountComplete',tileNum);
-        if(tileNum == this.tileCount){
+        if(tileNum == this.tileCount && this.props.firstWeekMountComplete){
             this.props.firstWeekMountComplete();
         }
     }
