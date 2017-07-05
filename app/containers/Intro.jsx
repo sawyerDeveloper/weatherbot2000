@@ -29,8 +29,11 @@ export default class Intro extends React.Component {
                     textAlign: 'center'
                 },
                 skipButton: {
-
-                }
+                    
+                },
+                logo: {
+                    textAlign: 'center'
+                },
             },
         })
         const opts = {
@@ -42,6 +45,7 @@ export default class Intro extends React.Component {
         };
         return (
             <div style={ styles.container }>
+                <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
                 <YouTube
                     videoId="gA2pFBE3ToM"
                     opts={opts}
