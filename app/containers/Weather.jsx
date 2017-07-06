@@ -24,8 +24,10 @@ export default class Weather extends React.Component {
     }
 
     firstWeekMountComplete(){
+        let weatherMapHolder = this.weatherMapHolder;
+        TweenLite.fromTo(weatherMapHolder, 0.7, {opacity: 0, x:-500}, {x:0, opacity: 1});
         let zipCompareHolder = this.zipCompareHolder;
-        TweenLite.fromTo(zipCompareHolder, 0.7, {opacity: 0, y:500}, {y:0, opacity: 1});
+        TweenLite.fromTo(zipCompareHolder, 0.7, {opacity: 0, y:500}, {y:0, opacity: 1, delay: 0.5});
     }
 
     openTile(tileNum){
@@ -70,6 +72,7 @@ export default class Weather extends React.Component {
             newZips.pop();
         }
         newZips.push(zip);
+        console.log(newZips)
         this.setState({
             zips: newZips
         })
@@ -112,7 +115,7 @@ export default class Weather extends React.Component {
                     opacity: 0
                 },
                 weatherMapHolder: {
-                    
+                    opacity: 0
                 },
                 refreshHolder: {
                     
@@ -141,8 +144,8 @@ export default class Weather extends React.Component {
                     refresh={this.state.refresh} 
                     refreshComplete={this.refreshComplete} 
                     zip={this.state.zips[0]} />
-                <div style={ styles.weatherMapHolder }>
-
+                <div ref={ref => this.weatherMapHolder = ref} style={ styles.weatherMapHolder }>
+                    <img src="../public/images/SiteAnimation.png"/>
                     <img src="../public/images/WeatherMap.jpg"/>
                 </div>
                 <div style={ styles.refeshHolder }>
