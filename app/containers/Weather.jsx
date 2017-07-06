@@ -24,7 +24,9 @@ export default class Weather extends React.Component {
     }
 
     firstWeekMountComplete(){
-
+        console.log(this.zipCompareHolder)
+        let zipCompareHolder = this.zipCompareHolder;
+        TweenLite.fromTo(zipCompareHolder, 0.7, {opacity: 0, y:500}, {y:0, opacity: 1});
     }
 
     openTile(tileNum){
@@ -85,7 +87,7 @@ export default class Weather extends React.Component {
                     bottom: 0,
                     left: 0,
                     width: 850,
-                    height: 600,
+                    height: 650,
                     background: 'grey',
                     borderRadius: 10,
                     display: 'block',
@@ -114,7 +116,7 @@ export default class Weather extends React.Component {
                     
                 },
                 zipCompareHolder: {
-
+                    opacity: 0
                 }
             },
             'hasRefreshed': {
@@ -137,13 +139,14 @@ export default class Weather extends React.Component {
                     refresh={this.state.refresh} 
                     refreshComplete={this.refreshComplete} 
                     zip={this.state.zips[0]} />
+                    <div style={ styles.logo }><img src="../public/images/WeatherMap.jpg"/></div>
                 <div style={ styles.refeshHolder }>
                     <button style={ styles.refreshButton } onClick={this.refreshData}>
                         Refresh
                     </button>
                     <div style={ styles.refreshText }>Last Refresh: {this.state.lastRefresh}</div>
                 </div>
-                <div style={ styles.zipCompare }>
+                <div ref={ref => this.zipCompareHolder = ref} style={ styles.zipCompareHolder }>
                     <ZipCompare dispatchZip={this.dispatchZip} />
                 </div>
                 {this.state.zips.length > 1 ?

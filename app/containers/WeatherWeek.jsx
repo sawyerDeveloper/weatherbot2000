@@ -58,7 +58,7 @@ export default class WeatherWeek extends React.Component {
     updateWeeklyWeather(){
         //Get weather data through internal API
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
-            console.log(obj.weather)
+            //console.log(obj.weather)
             this.setState({ dailyWeather: obj.weather, city: obj.city });
             this.props.refreshComplete(this.timeStamp());
         })
@@ -74,7 +74,7 @@ export default class WeatherWeek extends React.Component {
         const styles = reactCSS({
         'default': {
                 container: {
-                    marginTop: 20
+                    marginTop: 10
                 },
                 tileHolder: {
                     padding: 5
@@ -92,7 +92,7 @@ export default class WeatherWeek extends React.Component {
         var tileNum = 0;
         return (
             <div style={ styles.container }>
-                <div style={ styles.homeHeader } ref={c => this.header = c}>This Week's Weather in {this.state.city}</div>
+                <div style={ styles.homeHeader } ref={ref => this.header = ref}>This Week's Weather in {this.state.city}</div>
                     <div style={ styles.tileHolder }>
                         <TransitionGroup>
                             {this.state.dailyWeather.map((day) => {

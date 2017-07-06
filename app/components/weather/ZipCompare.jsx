@@ -24,19 +24,22 @@ export default class ZipCompare extends React.Component {
         const styles = reactCSS({
         'default': {
                 container: {
-
+                    
+                },
+                text: {
+                    color: 'white',
+                    fontSize: 18
                 },
                 zipButton: {
                     color: 'black',
-                    borderRadius: '5px',
-                    float: 'left'
+                    borderRadius: '5px'
                 }
             },
         })
         
         return (
             <div style={ styles.container }>
-                <div>Enter a zip code of a city you'd like to compare to Norfolk, VA</div>
+                <div style={ styles.text }>Enter a zip code of a city you'd like to compare to Norfolk, VA</div>
                 <input type="number" value={this.state.zip} onChange={ this.handleZipInput } maxLength="5"/>
                 <button style={ styles.zipButton } onClick={this.dispatchZip}>
                         Compare
