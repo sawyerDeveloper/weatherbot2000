@@ -1,6 +1,7 @@
 import React from 'react';
 import WeatherWeek from './WeatherWeek.jsx';
 import ZipCompare from '../components/weather/ZipCompare.jsx';
+import AnimatedRobot from '../components/weather/AnimatedRobot.jsx';
 import reactCSS from 'reactcss';
 import {TweenLite} from "gsap";
 
@@ -13,7 +14,8 @@ export default class Weather extends React.Component {
             hasRefreshed: false,
             refresh: false,
             lastRefresh: "",
-            openedTile: 0
+            openedTile: 0,
+            robotSource: "../public/images/SiteAnimation.png"
         }
 
         this.openTile = this.openTile.bind(this);
@@ -21,6 +23,12 @@ export default class Weather extends React.Component {
         this.refreshComplete = this.refreshComplete.bind(this);
         this.refreshData = this.refreshData.bind(this);
         this.dispatchZip = this.dispatchZip.bind(this);
+        this.startTalking = this.startTalking.bind(this);
+    }
+    startTalking(){
+        this.setState({
+            robotSource: "../public/images/SiteAnimationGif.gif?"+Math.random(1000)
+        })
     }
 
     firstWeekMountComplete(){
@@ -144,8 +152,8 @@ export default class Weather extends React.Component {
                     refresh={this.state.refresh} 
                     refreshComplete={this.refreshComplete} 
                     zip={this.state.zips[0]} />
-                <div ref={ref => this.weatherMapHolder = ref} style={ styles.weatherMapHolder }>
-                    <img src="../public/images/SiteAnimation.png"/>
+                <div onClick={this.startTalking} ref={ref => this.weatherMapHolder = ref} style={ styles.weatherMapHolder }>
+                    <img src={this.state.robotSource}/>
                     <img src="../public/images/WeatherMap.jpg"/>
                 </div>
                 <div style={ styles.refeshHolder }>
