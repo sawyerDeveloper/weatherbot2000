@@ -10,6 +10,7 @@ export default class Weather extends React.Component {
         super(props)
         this.state = {
             zips: ["23510"],
+            hasRefreshed: false,
             refresh: false,
             lastRefresh: "",
             openedTile: 0
@@ -54,10 +55,19 @@ export default class Weather extends React.Component {
             refresh: false,
             lastRefresh: timeStamp
         })
+
+        if(!this.state.hasRefreshed){
+            this.setState({
+                hasRefreshed: true
+            })
+        }
     }
 
     dispatchZip(zip){
         let newZips = this.state.zips;
+        if(newZips.length > 1){
+            newZips.pop();
+        }
         newZips.push(zip);
         this.setState({
             zips: newZips
@@ -78,30 +88,44 @@ export default class Weather extends React.Component {
                     height: 600,
                     background: 'grey',
                     borderRadius: 10,
-                    display: 'block'
+                    display: 'block',
+                    textAlign: 'center'
                 },
                 logo: {
                     textAlign: 'center'
                 },
                 refreshText: {
+                    position: 'fixed',
+                    bottom: 13,
+                    right: 100,
                     fontSize: 16,
                     color: 'white',
-                    float: 'left'
+                    opacity: 0
                 },
                 refreshButton: {
+                    position: 'fixed',
+                    bottom: 10,
+                    right: 10,
                     color: 'black',
                     borderRadius: 5,
-                    float: 'left'
+                    opacity: 0
                 },
                 refreshHolder: {
-                    position: 'relative',
-                    marginLeft: 20
+                    
                 },
                 zipCompareHolder: {
 
                 }
             },
-        })
+            'hasRefreshed': {
+                refreshButton: {
+                    opacity: 100
+                },
+                refreshText: {
+                    opacity: 100
+                }
+            }
+        }, this.state)
         
         return (
             <div style={ styles.container }>
