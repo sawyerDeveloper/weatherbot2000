@@ -22,8 +22,12 @@ router.get('/', (req, responseComplete) => {
             var weekArray = res.daily.data
             //not sure about 7 days wording
             //weekArray.shift()
+            let address = response.json.results[0].formatted_address.split(",")
+            let cityName = address[0]
+            let stateName = address[1].split(" ")[1]
+
             let obj = {weather:weekArray, 
-                city: response.json.results[0].formatted_address.split(" ")[0] + " " + response.json.results[0].formatted_address.split(" ")[1]}
+                city: cityName+", "+stateName}
             responseComplete.json(obj)
         })
         .catch(err => {                 
