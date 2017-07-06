@@ -57,13 +57,11 @@ export default class Weather extends React.Component {
     }
 
     dispatchZip(zip){
-        console.log(zip)
         let newZips = this.state.zips;
         newZips.push(zip);
         this.setState({
             zips: newZips
         })
-        console.log(newZips)
     }
 
     render() {
