@@ -178,14 +178,17 @@ export default class WeatherTile extends React.Component {
         var newDay = new Date(0);
         newDay.setUTCSeconds(this.props.day.time);
         let dayNum = newDay.getDay();
-        let dayName = dayMapping[dayNum];
+        var dayName = dayMapping[dayNum];
+        if(this.props.tileNum == 1){
+            dayName = "Today";
+        }
 
         return (
             <div onClick={(tileNum, summary) => this.props.openTile(this.props.tileNum, this.props.day.summary)} style={ styles.container } ref={c => this.container = c}>
                 <div style={ styles.tile }>
                     <div style={ styles.tileFront }>
                         <div style={ styles.tileFrontText }>
-                            <div style={ styles.tileFrontDayText }>{dayMapping[dayNum]}</div>
+                            <div style={ styles.tileFrontDayText }>{dayName}</div>
                             <div>Temp {Math.round(this.props.day.temperatureMax)}&#176;</div>
                             <div>Precip {Math.trunc(this.props.day.precipProbability * 100)}%</div>
                             <div>Humid {Math.round(this.props.day.humidity * 100)}%</div>
