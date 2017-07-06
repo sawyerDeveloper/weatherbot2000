@@ -181,7 +181,7 @@ export default class WeatherTile extends React.Component {
         let dayName = dayMapping[dayNum];
 
         return (
-            <div onClick={(tileNum) => this.props.openTile(this.props.tileNum)} style={ styles.container } ref={c => this.container = c}>
+            <div onClick={(tileNum, summary) => this.props.openTile(this.props.tileNum, this.props.day.summary)} style={ styles.container } ref={c => this.container = c}>
                 <div style={ styles.tile }>
                     <div style={ styles.tileFront }>
                         <div style={ styles.tileFrontText }>

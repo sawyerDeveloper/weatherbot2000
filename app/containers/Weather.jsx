@@ -1,7 +1,6 @@
 import React from 'react';
 import WeatherWeek from './WeatherWeek.jsx';
 import ZipCompare from '../components/weather/ZipCompare.jsx';
-import AnimatedRobot from '../components/weather/AnimatedRobot.jsx';
 import reactCSS from 'reactcss';
 import {TweenLite} from "gsap";
 
@@ -23,13 +22,10 @@ export default class Weather extends React.Component {
         this.refreshComplete = this.refreshComplete.bind(this);
         this.refreshData = this.refreshData.bind(this);
         this.dispatchZip = this.dispatchZip.bind(this);
-        this.startTalking = this.startTalking.bind(this);
+
+        this.synth = window.speechSynthesis;
     }
-    startTalking(){
-        this.setState({
-            robotSource: "../public/images/SiteAnimationGif.gif?"+Math.random(1000)
-        })
-    }
+
 
     firstWeekMountComplete(){
         let weatherMapHolder = this.weatherMapHolder;
@@ -38,11 +34,19 @@ export default class Weather extends React.Component {
         TweenLite.fromTo(zipCompareHolder, 0.7, {opacity: 0, y:500}, {y:0, opacity: 1, delay: 0.5});
     }
 
-    openTile(tileNum){
+    openTile(tileNum, summary){
+        
+        var speech = new SpeechSynthesisUtterance(summary);
+            speech.pitch = 1;
+            speech.rate = 0.65;
+            speech.voice = this.synth.getVoices()[10]
+            
         if(this.state.openedTile == 0){
             this.setState({
-                openedTile: tileNum
+                openedTile: tileNum,
+                robotSource: "../public/images/SiteAnimationGif.gif?"+Math.random(1000)
             })
+            this.synth.speak(speech);
         }else{
             this.setState({
                 openedTile: 0
@@ -128,6 +132,9 @@ export default class Weather extends React.Component {
                 refreshHolder: {
                     
                 },
+                robot: {
+                    zIndex: 10000
+                },
                 zipCompareHolder: {
                     opacity: 0
                 }
@@ -147,13 +154,14 @@ export default class Weather extends React.Component {
                 <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
                 <WeatherWeek 
                     firstWeekMountComplete={this.firstWeekMountComplete} 
+                    startTalking={this.startTalking}
                     openTile={this.openTile} 
                     openedTile={this.state.openedTile}
                     refresh={this.state.refresh} 
                     refreshComplete={this.refreshComplete} 
                     zip={this.state.zips[0]} />
-                <div onClick={this.startTalking} ref={ref => this.weatherMapHolder = ref} style={ styles.weatherMapHolder }>
-                    <img src={this.state.robotSource}/>
+                <div ref={ref => this.weatherMapHolder = ref} style={ styles.weatherMapHolder }>
+                    <img style={ styles.robot } src={this.state.robotSource}/>
                     <img src="../public/images/WeatherMap.jpg"/>
                 </div>
                 <div style={ styles.refeshHolder }>
@@ -167,6 +175,7 @@ export default class Weather extends React.Component {
                 </div>
                 {this.state.zips.length > 1 ?
                     <WeatherWeek 
+                        startTalking={this.startTalking}
                         openTile={this.openTile} 
                         openedTile={this.state.openedTile}
                         refresh={this.state.refresh} 
