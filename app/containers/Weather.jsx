@@ -24,13 +24,11 @@ export default class Weather extends React.Component {
     }
 
     firstWeekMountComplete(){
-        console.log(this.zipCompareHolder)
         let zipCompareHolder = this.zipCompareHolder;
         TweenLite.fromTo(zipCompareHolder, 0.7, {opacity: 0, y:500}, {y:0, opacity: 1});
     }
 
     openTile(tileNum){
-        console.log('openTile',tileNum)
         if(this.state.openedTile == 0){
             this.setState({
                 openedTile: tileNum
@@ -43,7 +41,8 @@ export default class Weather extends React.Component {
     }
 
     componentDidMount(){
-        this.countdown = setInterval(this.refreshData, 30000);
+        //Turn this back on for production
+        //this.countdown = setInterval(this.refreshData, 30000);
     }
 
     refreshData(){
@@ -112,6 +111,9 @@ export default class Weather extends React.Component {
                     borderRadius: 5,
                     opacity: 0
                 },
+                weatherMapHolder: {
+                    
+                },
                 refreshHolder: {
                     
                 },
@@ -139,7 +141,10 @@ export default class Weather extends React.Component {
                     refresh={this.state.refresh} 
                     refreshComplete={this.refreshComplete} 
                     zip={this.state.zips[0]} />
-                    <div style={ styles.logo }><img src="../public/images/WeatherMap.jpg"/></div>
+                <div style={ styles.weatherMapHolder }>
+
+                    <img src="../public/images/WeatherMap.jpg"/>
+                </div>
                 <div style={ styles.refeshHolder }>
                     <button style={ styles.refreshButton } onClick={this.refreshData}>
                         Refresh

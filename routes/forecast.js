@@ -18,7 +18,7 @@ router.get('/', (req, responseComplete) => {
         .longitude(response.json.results[0].geometry.location.lng)
         .get()
         .then(res => {
-
+  
             var weekArray = res.daily.data
             //not sure about 7 days wording
             //weekArray.shift()

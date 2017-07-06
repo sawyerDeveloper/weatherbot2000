@@ -43,7 +43,6 @@ export default class WeatherWeek extends React.Component {
     }
 
     tileMountComplete(tileNum){
-        console.log('tileMountComplete',tileNum);
         if(tileNum == this.tileCount && this.props.firstWeekMountComplete){
             this.props.firstWeekMountComplete();
         }
@@ -58,7 +57,6 @@ export default class WeatherWeek extends React.Component {
     updateWeeklyWeather(){
         //Get weather data through internal API
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
-            //console.log(obj.weather)
             this.setState({ dailyWeather: obj.weather, city: obj.city });
             this.props.refreshComplete(this.timeStamp());
         })

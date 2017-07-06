@@ -48,8 +48,6 @@ export default class WeatherTile extends React.Component {
             this.setState({ 
                 hourly: hours
             });
-            
-            console.log(hours)
         })
     }
     
