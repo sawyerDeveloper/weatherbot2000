@@ -56,7 +56,7 @@ export default class Weather extends React.Component {
 
     componentDidMount(){
         //Turn this back on for production
-        //this.countdown = setInterval(this.refreshData, 30000);
+        this.countdown = setInterval(this.refreshData, 30000);
     }
 
     refreshData(){

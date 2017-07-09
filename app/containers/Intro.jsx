@@ -47,7 +47,7 @@ export default class Intro extends React.Component {
             <div style={ styles.container }>
                 <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
                 <YouTube
-                    videoId="gA2pFBE3ToM"
+                    videoId="mYvor5FqM8w"
                     opts={opts}
                     onEnd={this.onEnd}
                 />
