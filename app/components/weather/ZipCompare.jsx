@@ -44,6 +44,7 @@ export default class ZipCompare extends React.Component {
                 <button style={ styles.zipButton } onClick={this.dispatchZip}>
                         Compare
                 </button>
+                
             </div>
         );
     }

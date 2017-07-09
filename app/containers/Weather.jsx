@@ -38,8 +38,8 @@ export default class Weather extends React.Component {
         
         var speech = new SpeechSynthesisUtterance(summary);
             speech.pitch = 1;
-            speech.rate = 0.65;
-            speech.voice = this.synth.getVoices()[10]
+            speech.rate = 0.7;
+            speech.voice = this.synth.getVoices()["boing"];
             
         if(this.state.openedTile == 0){
             this.setState({
@@ -128,12 +128,6 @@ export default class Weather extends React.Component {
                 },
                 weatherMapHolder: {
                     opacity: 0
-                },
-                refreshHolder: {
-                    
-                },
-                robot: {
-                    zIndex: 10000
                 },
                 zipCompareHolder: {
                     opacity: 0

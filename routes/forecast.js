@@ -30,7 +30,8 @@ router.get('/', (req, responseComplete) => {
                 city: cityName+", "+stateName}
             responseComplete.json(obj)
         })
-        .catch(err => {                 
+        .catch(err => {    
+
             console.log(err)
         })
       }
