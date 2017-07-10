@@ -21,6 +21,7 @@
     "ease": "^0.1.0",
     "ejs": "~2.3.1",
     "express": "~4.12.2",
+    "forecastio": "^1.0.2",
     "gsap": "^1.20.1",
     "gsap-react-plugin": "^1.0.2",
     "morgan": "^1.8.2",
