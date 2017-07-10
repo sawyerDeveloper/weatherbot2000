@@ -11,6 +11,7 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var gutil = require('gulp-util');
 var babelify = require('babelify');
+var sass = require('gulp-sass');
 
 // External dependencies you do not want to rebundle while developing,
 // but include in your application deployment
@@ -31,8 +32,15 @@ gulp.task('deploy', function (){
 	bundleApp(true);
 });
 
+gulp.task('styles', function() {
+    gulp.src('./sass/**/*.sass')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./public/'));
+});
+
 gulp.task('watch', function () {
-	gulp.watch(['./app/*.js'], ['scripts']);
+	gulp.watch(['./sass/**/*.sass'],['styles']);
+	gulp.watch(['./app/*.jsx'], ['scripts']);
 });
 
 // When running 'gulp' on the terminal this task will fire.
