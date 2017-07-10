@@ -121,9 +121,6 @@ export default class Weather extends React.Component {
                     display: 'block',
                     textAlign: 'center'
                 },
-                logo: {
-                    textAlign: 'center'
-                },
                 refreshText: {
                     position: 'fixed',
                     bottom: 13,
@@ -139,6 +136,9 @@ export default class Weather extends React.Component {
                     color: 'black',
                     borderRadius: 5,
                     opacity: 0
+                },
+                weatherWeekHolder: {
+                    marginBottom: 10
                 },
                 weatherMapHolder: {
                     opacity: 0
@@ -159,7 +159,8 @@ export default class Weather extends React.Component {
         
         return (
             <div style={ styles.container }>
-                <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
+                <div><img src="../public/images/weatherbotlogo.png"/></div>
+                <div style={styles.weatherWeekHolder}>
                 <WeatherWeek 
                     speakSummary={this.speakSummary}
                     firstWeekMountComplete={this.firstWeekMountComplete} 
@@ -169,6 +170,7 @@ export default class Weather extends React.Component {
                     refresh={this.state.refresh} 
                     refreshComplete={this.refreshComplete} 
                     zip={this.state.zips[0]} />
+                </div>
                 <div ref={ref => this.weatherMapHolder = ref} style={ styles.weatherMapHolder }>
                     <img style={ styles.robot } src={this.state.robotSource}/>
                     <img src="../public/images/WeatherMap.jpg"/>
