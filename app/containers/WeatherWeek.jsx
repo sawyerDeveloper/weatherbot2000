@@ -58,6 +58,7 @@ export default class WeatherWeek extends React.Component {
         //Get weather data through internal API
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
             this.setState({ dailyWeather: obj.weather, city: obj.city });
+            console.log(obj.weather)
             this.props.refreshComplete(this.timeStamp());
         })
     }

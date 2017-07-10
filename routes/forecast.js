@@ -8,11 +8,12 @@ var googleMapsClient = require('@google/maps').createClient({
 
 /* GET: Weather */
 router.get('/', (req, responseComplete) => {
+
     googleMapsClient.geocode({
       address: req.query.address
     }, (err, response) => {
       if (!err) {
-
+        console.log('a',response.json.results[0].geometry.location.lat)
         forecast
         .latitude(response.json.results[0].geometry.location.lat)
         .longitude(response.json.results[0].geometry.location.lng)
@@ -45,11 +46,11 @@ router.get('/hourly', (req, responseComplete) => {
       address: address
     }, (err, response) => {
       if (!err) {
-        console.log(time)
         forecast
         .latitude(response.json.results[0].geometry.location.lat)
         .longitude(response.json.results[0].geometry.location.lng)
         .time(time)
+        .exclude('currently','minutely','daily','alerts','flags')
         .get()
         .then(res => {
             responseComplete.json(res.hourly.data)
