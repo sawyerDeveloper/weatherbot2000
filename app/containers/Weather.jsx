@@ -39,7 +39,7 @@ export default class Weather extends React.Component {
         var speech = new SpeechSynthesisUtterance(summary);
             speech.pitch = 1;
             speech.rate = 0.7;
-            speech.voice = this.synth.getVoices()["boing"];
+            speech.voice = this.synth.getVoices()[10];
             
         if(this.state.openedTile == 0){
             this.setState({
@@ -55,7 +55,7 @@ export default class Weather extends React.Component {
     }
 
     componentDidMount(){
-        //Turn this back on for production
+        //Turn this on for production
         this.countdown = setInterval(this.refreshData, 60000);
     }
 
