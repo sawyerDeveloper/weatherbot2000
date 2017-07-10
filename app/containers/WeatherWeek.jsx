@@ -12,6 +12,7 @@ export default class WeatherWeek extends React.Component {
         this.state = {
             dailyWeather:[],
             city: "",
+            summary: ""
         }
         //Or 7
         this.tileCount = 8;
@@ -44,7 +45,8 @@ export default class WeatherWeek extends React.Component {
 
     tileMountComplete(tileNum){
         if(tileNum == this.tileCount && this.props.firstWeekMountComplete){
-            this.props.firstWeekMountComplete();
+            console.log("a",this.state.summary)
+            this.props.firstWeekMountComplete(this.state.summary);
         }
     }
 
@@ -57,8 +59,7 @@ export default class WeatherWeek extends React.Component {
     updateWeeklyWeather(){
         //Get weather data through internal API
         fetch('/forecast/?address='+this.props.zip).then( res => res.json() ).then( obj => {
-            this.setState({ dailyWeather: obj.weather, city: obj.city });
-            this.props.speakSummary(obj.summary);
+            this.setState({ dailyWeather: obj.weather, city: obj.city, summary: obj.summary });
             this.props.refreshComplete(this.timeStamp());
         })
     }

@@ -28,11 +28,23 @@ export default class Weather extends React.Component {
     }
 
 
-    firstWeekMountComplete(){
+    firstWeekMountComplete(summary){
+        this.summary = summary;
         let weatherMapHolder = this.weatherMapHolder;
-        TweenLite.fromTo(weatherMapHolder, 0.7, {opacity: 0, x:-500}, {x:0, opacity: 1});
+        TweenLite.fromTo(weatherMapHolder, 0.7, {opacity: 0, x:-500}, {x:0, opacity: 1, onComplete: this.speakSummary});
         let zipCompareHolder = this.zipCompareHolder;
         TweenLite.fromTo(zipCompareHolder, 0.7, {opacity: 0, y:500}, {y:0, opacity: 1, delay: 0.5});
+    }
+
+    speakSummary(){
+        var speech = new SpeechSynthesisUtterance(this.summary);
+            speech.pitch = 1;
+            speech.rate = 0.7;
+            speech.voice = this.synth.getVoices()[10];
+            this.synth.speak(speech);
+             this.setState({
+                robotSource: "../public/images/SiteAnimationGifLong.gif?"+Math.random(1000)
+            })
     }
 
     openTile(tileNum, summary){
@@ -54,17 +66,6 @@ export default class Weather extends React.Component {
                 openedTile: 0
             })
         }
-    }
-
-    speakSummary(summary){
-        /*
-        this.countdown = setInterval(this.speakSummaryTimed, 1000);
-        var speech = new SpeechSynthesisUtterance(summary);
-            speech.pitch = 1;
-            speech.rate = 0.7;
-            speech.voice = this.synth.getVoices()[10];
-            this.synth.speak(speech);
-            */
     }
 
     componentDidMount(){
