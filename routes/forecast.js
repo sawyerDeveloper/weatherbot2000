@@ -39,15 +39,18 @@ router.get('/', (req, responseComplete) => {
 });
 
 router.get('/hourly', (req, responseComplete) => {
+  let address = req.query.params.split('|')[0];
+  let time = parseInt(req.query.params.split('|')[1]);
+  //console.log(address,time)
     googleMapsClient.geocode({
-      address: req.query.address
+      address: address
     }, (err, response) => {
       if (!err) {
-          
+        console.log(time)
         forecast
         .latitude(response.json.results[0].geometry.location.lat)
         .longitude(response.json.results[0].geometry.location.lng)
-        .time(req.params.time)
+        .time(time)
         .get()
         .then(res => {
             responseComplete.json(res.hourly.data)

@@ -43,7 +43,8 @@ export default class WeatherTile extends React.Component {
         this.props.tileMountComplete(this.props.tileNum);
 
         //wait for animation to end for smoothness before data loading
-        fetch('/forecast/hourly/?address='+this.props.zip+',time='+this.props.day.time).then( res => res.json() ).then( _weather => {
+        fetch('/forecast/hourly/?params='+this.props.zip+'|'+this.props.day.time).then( res => res.json() ).then( _weather => {
+            console.log(this.props.day.time,_weather)
             let hours = [_weather[12],_weather[13],_weather[14],_weather[15],_weather[16],_weather[17],_weather[18],_weather[19],_weather[20],_weather[21],]
             this.setState({ 
                 hourly: hours
