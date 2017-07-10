@@ -13,13 +13,14 @@ router.get('/', (req, responseComplete) => {
       address: req.query.address
     }, (err, response) => {
       if (!err) {
-        console.log('a',response.json.results[0].geometry.location.lat)
+        
         forecast
         .latitude(response.json.results[0].geometry.location.lat)
         .longitude(response.json.results[0].geometry.location.lng)
         .get()
         .then(res => {
-  
+            console.log(res.daily)
+            let summary = res.daily.summary
             var weekArray = res.daily.data
             //not sure about 7 days wording
             //weekArray.shift()
@@ -28,7 +29,8 @@ router.get('/', (req, responseComplete) => {
             let stateName = address[1].split(" ")[1]
 
             let obj = {weather:weekArray, 
-                city: cityName+", "+stateName}
+                city: cityName+", "+stateName,
+                summary: summary}
             responseComplete.json(obj)
         })
         .catch(err => {    

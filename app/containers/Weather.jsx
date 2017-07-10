@@ -22,6 +22,7 @@ export default class Weather extends React.Component {
         this.refreshComplete = this.refreshComplete.bind(this);
         this.refreshData = this.refreshData.bind(this);
         this.dispatchZip = this.dispatchZip.bind(this);
+        this.speakSummary = this.speakSummary.bind(this);
 
         this.synth = window.speechSynthesis;
     }
@@ -41,6 +42,7 @@ export default class Weather extends React.Component {
             speech.rate = 0.7;
             speech.voice = this.synth.getVoices()[10];
             
+        //hack until I can find a suitable sprite sheet lib that works with react
         if(this.state.openedTile == 0){
             this.setState({
                 openedTile: tileNum,
@@ -54,9 +56,20 @@ export default class Weather extends React.Component {
         }
     }
 
+    speakSummary(summary){
+        /*
+        this.countdown = setInterval(this.speakSummaryTimed, 1000);
+        var speech = new SpeechSynthesisUtterance(summary);
+            speech.pitch = 1;
+            speech.rate = 0.7;
+            speech.voice = this.synth.getVoices()[10];
+            this.synth.speak(speech);
+            */
+    }
+
     componentDidMount(){
         //Turn this on for production
-        this.countdown = setInterval(this.refreshData, 60000);
+        this.countdown = setInterval(this.refreshData, 180000);
     }
 
     refreshData(){
@@ -147,6 +160,7 @@ export default class Weather extends React.Component {
             <div style={ styles.container }>
                 <div style={ styles.logo }><img src="../public/images/weatherbotlogo.png"/></div>
                 <WeatherWeek 
+                    speakSummary={this.speakSummary}
                     firstWeekMountComplete={this.firstWeekMountComplete} 
                     startTalking={this.startTalking}
                     openTile={this.openTile} 
