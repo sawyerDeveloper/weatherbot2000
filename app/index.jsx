@@ -4,7 +4,6 @@ import Weather from './containers/Weather.jsx';
 import Intro from './containers/Intro.jsx';
 import { browserHistory, Router, Route } from 'react-router';
 
-
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={Intro}/>

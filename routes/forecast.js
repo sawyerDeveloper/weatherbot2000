@@ -46,7 +46,7 @@ router.get('/hourly', (req, responseComplete) => {
       address: address
     }, (err, response) => {
       if (!err) {
-        let newDate = String(new Date(time * 1000))
+        let newDate = new Date(time * 1000)
 
         forecast
         .latitude(response.json.results[0].geometry.location.lat)
