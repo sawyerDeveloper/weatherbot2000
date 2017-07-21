@@ -1,6 +1,6 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import WeatherTile from '../components/weatherWeek/WeatherTile.jsx';
+import WeatherTile from './WeatherTile.jsx';
 import GSAP from 'react-gsap-enhancer';
 import TransitionGroup from 'react-addons-transition-group';
 import {TweenLite} from "gsap";
