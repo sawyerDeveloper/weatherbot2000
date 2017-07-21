@@ -5,7 +5,7 @@ import { iconMapping } from '../../utils/constants';
 const WeatherTileBack = (props) => {
 
     if(props.hourly == null){
-        console.log('should not render DayDetails')
+        console.log('should not render WeatherTileBack')
         return null;
     }
     const styles = reactCSS({
