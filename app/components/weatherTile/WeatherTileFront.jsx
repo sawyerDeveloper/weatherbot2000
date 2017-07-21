@@ -1,6 +1,6 @@
 import React from 'react';
 import reactCSS from 'reactcss';
-import { dayMapping, iconMapping } from '../../utils/constants';
+import { iconMapping } from '../../utils/constants';
 import ReactAnimatedWeather from 'react-animated-weather';
 
 const WeatherTileFront = (props) => {
@@ -27,7 +27,7 @@ const WeatherTileFront = (props) => {
     return (
         <div style={ styles.container }>
             <div style={ styles.text }>
-                <div style={ styles.dayText }>{dayMapping[props.dayNum]}</div>
+                <div style={ styles.dayText }>{props.dayName}</div>
                 <div>Temp {Math.round(props.day.temperatureMax)}&#176;</div>
                 <div>Precip {Math.trunc(props.day.precipProbability * 100)}%</div>
                 <div>Humid {Math.round(props.day.humidity * 100)}%</div>

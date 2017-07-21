@@ -1,56 +1,45 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import HourlyDetail from './HourlyDetail.jsx';
+import { iconMapping } from '../../utils/constants';
+const WeatherTileBack = (props) => {
 
-export default class WeatherTileBack extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
+    if(props.hourly == null){
+        console.log('should not render DayDetails')
+        return null;
     }
-
-
-    render() {
-        if(this.props.hourly == null){
-            console.log('should not render DayDetails')
-            return null;
-        }
-        const dayMapping = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-        const styles = reactCSS({
-        'default': {
-                container: {
-                    borderRadius: 5,
-                    background: 'white',
-                    textAlign: 'center',
-                    width: 360,
-                    height: 350,
-                    position: 'absolute',
-                    left: -100,
-                    top: -100,
-                },
-                header: {
-                    fontSize: '18px',
-                    fontWeight: 'bold',
-                }
+    const styles = reactCSS({
+    'default': {
+            container: {
+                borderRadius: 5,
+                background: 'white',
+                textAlign: 'center',
+                width: 360,
+                height: 350,
+                position: 'absolute',
+                left: -150,
+                top: -200,
+                overflow: 'hidden'
             },
-        })
+            header: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+            }
+        },
+    })
 
-        let dayName = dayMapping[this.props.dayNum];
-
-        return (
-
-            <div style={ styles.container }>
-                <div style={ styles.header }>
-                    10 Hour Forecast for {dayName}
-                </div>
-                {this.props.hourly.map((hour) => {
-                        return (
-                            <HourlyDetail hour={hour} key={hour.time}/>
-                        );
-                    })}
+    return (
+        <div style={ styles.container }>
+            <div style={ styles.header }>
+                10 Hour Forecast for {props.dayName}
             </div>
-        );
-    }
+            {props.hourly.map((hour) => {
+                    return (
+                        <HourlyDetail hour={hour} key={hour.time}/>
+                    );
+                })}
+        </div>
+    );
+    
 }
+export default WeatherTileBack;

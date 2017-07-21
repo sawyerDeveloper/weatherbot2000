@@ -4,6 +4,7 @@ import ReactAnimatedWeather from 'react-animated-weather';
 import WeatherTileFront from '../components/weatherTile/WeatherTileFront.jsx';
 import WeatherTileBack from '../components/weatherTile/WeatherTileBack.jsx';
 import HourlyDetail from '../components/weatherTile/HourlyDetail.jsx';
+import { dayMapping } from '../utils/constants';
 import {TweenLite} from "gsap";
 
 export default class WeatherTile extends React.Component {
@@ -20,10 +21,6 @@ export default class WeatherTile extends React.Component {
         this.tweenInComplete = this.tweenInComplete.bind(this);
     }
 
-    componentDidMount(){
-
-    }
-
     componentWillReceiveProps(nextProps){
         if(nextProps.openedTile == this.props.tileNum){
             this.flip();
@@ -37,7 +34,6 @@ export default class WeatherTile extends React.Component {
         TweenLite.fromTo(container, .7, {x: 1000}, {x: 0, delay: this.props.animDelay, onComplete:this.tweenInComplete});
     }
 
-    
     tweenInComplete(){
         //alert parent that animation completed
         this.props.tileMountComplete(this.props.tileNum);
@@ -74,19 +70,6 @@ export default class WeatherTile extends React.Component {
     }
 
     render() {
-        const dayMapping = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        const iconMapping = {
-            "clear-day":"CLEAR_DAY",
-            "clear-night":"CLEAR_NIGHT",
-            "partly-cloudy-day":"PARTLY_CLOUDY_DAY",
-            "partly-cloudy-night":"PARTLY_CLOUDY_NIGHT",
-            "rain":"RAIN",
-            "cloudy":"CLOUDY",
-            "sleet":"SLEET",
-            "snow":"SNOW",
-            "wind":"WIND",
-            "fog":"FOG"
-        }
         const styles = reactCSS({
         'default': {
                 container: {
@@ -98,7 +81,6 @@ export default class WeatherTile extends React.Component {
                     float: 'left',
                     marginRight: 5,
                     zIndex: 1
-                    
                 },
                 tile: {
                     height: '100%',
@@ -112,33 +94,9 @@ export default class WeatherTile extends React.Component {
                     transition: 'all 1s ease-in-out',
                 },
                 tileBack: {
-                    borderRadius: 5,
-                    background: 'white',
-                    textAlign: 'center',
-                    width: 360,
-                    height: 350,
-                    position: 'absolute',
-                    left: -100,
-                    top: -100,
                     transform: 'rotateY(180deg)',
                     backfaceVisibility: 'hidden',
-                    overflow: 'hidden'
                 },
-                tileBackHeader: {
-                    fontSize: 18,
-                    fontWeight: 'bold'
-                },
-                hourlyDetailContainer: {
-                    borderTop: '1px solid black',
-                    width: 360,
-                    height: 31,
-                    textAlign: 'center',
-                },
-                hourlyDetailRowElement: {
-                    display: 'inline-block',
-                    marginRight: 10,
-                    fontSize: 11
-                }
             },
             'flipped': {
                 container: {
@@ -146,9 +104,6 @@ export default class WeatherTile extends React.Component {
                 },
                 tile: {
                     transform: 'rotateY(180deg)'
-                },
-                tileBack:{
-                    
                 },
                 tileFront: {
                     transform: 'scale3d(4,4,4)'
@@ -173,43 +128,10 @@ export default class WeatherTile extends React.Component {
             <div onClick={(tileNum, summary) => this.props.openTile(this.props.tileNum, this.props.day.summary)} style={ styles.container } ref={c => this.container = c}>
                 <div style={ styles.tile }>
                     <div style={ styles.tileFront }>
-                        <WeatherTileFront dayNum={dayNum} day={this.props.day} />
+                        <WeatherTileFront dayName={dayName} day={this.props.day} />
                     </div>
                     <div style={ styles.tileBack }>
-                        <div style={ styles.tileBackHeader }>
-                            10 Hour Forecast for {dayName}
-                        </div>
-                        {this.state.hourly.map((hour) => {
-                            var time = new Date(0);
-                            time.setUTCSeconds(hour.time);
-                            var displayTime = time.getHours();
-                            var suffix = "AM";
-
-                            if (displayTime >= 12) {
-                                displayTime = displayTime - 12;
-                                suffix = "PM";
-                            }
-
-                            if(displayTime == 0){
-                                displayTime = 12;
-                            }
-                                return (
-                                    <div style={ styles.hourlyDetailContainer } key={hour.time}>
-                                        <div style={ styles.hourlyDetailRowElement }>{displayTime}{suffix}</div>     
-                                        <ReactAnimatedWeather
-                                            style={ styles.hourlyDetailRowElement }
-                                            icon={iconMapping[hour.icon]}
-                                            color='black'
-                                            size={24}
-                                            animate={false}
-                                        />
-                                        <div style={ styles.hourlyDetailRowElement }>{hour.summary}</div>
-                                        <div style={ styles.hourlyDetailRowElement }>Temp {Math.round(hour.temperature)}&#176;</div>
-                                        <div style={ styles.hourlyDetailRowElement }>Precip {Math.trunc(hour.precipProbability * 100)}%</div>
-                                        <div style={ styles.hourlyDetailRowElement }>Humid {Math.round(hour.humidity * 100)}%</div>
-                                    </div>
-                                );
-                            })}
+                        <WeatherTileBack dayName={dayName} hourly={this.state.hourly} />
                     </div>
                 </div>
             </div>
