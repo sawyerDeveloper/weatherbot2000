@@ -12,10 +12,12 @@ const WeatherTileFront = (props) => {
                     width: '100px',
                     height: '100px',
                     background: 'white',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    cursor: 'pointer'
                 },
                 text: {
                     fontSize: '11px',
+                    userSelect: 'none'
                 },
                 dayText: {
                     fontSize: '13px',

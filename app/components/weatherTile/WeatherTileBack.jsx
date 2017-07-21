@@ -19,11 +19,14 @@ const WeatherTileBack = (props) => {
                 position: 'absolute',
                 left: -150,
                 top: -200,
-                overflow: 'hidden'
+                overflow: 'hidden',
+                userSelect: 'none',
+                cursor: 'pointer'
             },
             header: {
                 fontSize: '18px',
                 fontWeight: 'bold',
+                
             }
         },
     })
